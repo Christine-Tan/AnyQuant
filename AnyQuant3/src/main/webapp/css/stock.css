@@ -1,0 +1,155 @@
+body{
+    text-align:center;
+}
+
+.allTabs {
+    border: 1px solid #dde4f4;
+    padding-top: 1px;
+}
+
+.allTabs .tabs {
+    height: 26px;
+    padding: 2px 7px 0;
+    background: #eef5ff;
+    overflow: visible;
+}
+
+.allTabs .tabs .tab {
+    width: 75px;
+    height: 23px;
+    line-height: 23px;
+    border: none;
+    border-top: 2px solid #eef5ff;
+    font-family: 宋体;
+    font-size: 12px;
+    float:left;
+}
+
+.allTabs .tabs .on {
+    position: relative;
+    z-index: 1;
+    width: 50px;
+    height: 23px;
+    /*_height: 25px;*/
+    margin-bottom: -1px;
+    border-left: 1px solid #dde4f4;
+    border-right: 1px solid #dde4f4;
+    border-top-color: #062784;
+    background-color: White;
+    float:left;
+}
+
+.k_line {
+    width: 100%;
+    height: 500px;
+    /*background-color: #00ff33;*/
+}
+
+.bar {
+    width:100%;
+    height: 300px;
+    /*//background-color: #ff9966;*/
+}
+
+.single_label {
+    margin: 0 auto;
+    /*border: 1px solid;*/
+    width: 70%;
+}
+
+.analysis_line {
+    width: 50%;
+    height: 400px;
+    /*background-color: #00ff33;*/
+    float: left;
+}
+
+.analysis_line .analysis_linechart{
+    width:100%;
+    height:375px;
+}
+
+.analysis_pie {
+    width: 50%;
+    height: 400px;
+    /*background-color: #ff9966;*/
+    float: left;
+}
+
+.analysis_pie .analysis_piechart{
+    width:100%;
+    height:375px;
+}
+
+.blank {
+    height: 400px;
+}
+
+.analysis_bar {
+    width: 100%;
+    height: 350px;
+    /*background-color: #99ffff;*/
+}
+.industry_line {
+    width: 50%;
+    height: 400px;
+    /*background-color: #00ff33;*/
+    float: left;
+}
+
+.industry_pie {
+    width: 50%;
+    height: 400px;
+    /*background-color: #ff9966;*/
+    float: left;
+}
+
+.industry_bar {
+    width: 100%;
+    height: 350px;
+    /*background-color: #99ffff;*/
+}
+
+.bookmark {
+    border: 0px solid;
+    position: fixed;
+    width: 20px;
+    height: 84px;
+    padding-top: 6px;
+    background-color: #b6b6b6;
+}
+
+.bookmark#z1 {
+    z-index: 1;
+    top: 200px;
+    right: 13%;
+}
+
+.bookmark#z2 {
+    z-index: 1;
+    top: 300px;
+    right: 13%;
+}
+
+.bookmark#z3 {
+    z-index: 1;
+    top: 400px;
+    right: 13%;
+}
+
+.bookmark#z4 {
+    z-index: 1;
+    top: 500px;
+    right: 13%;
+}
+
+.bookmark#z5 {
+    z-index: 1;
+    top: 600px;
+    right: 13%;
+}
+
+.nav {
+    color: white;
+    text-decoration: none;
+}

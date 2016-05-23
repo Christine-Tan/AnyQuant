@@ -1,0 +1,21 @@
+﻿.background{
+	-fx-background-image: url(pic/background.png);
+	-fx-background-size: cover;
+}
+
+.background-add{
+	-fx-background-image: url(pic/background.png);
+	-fx-background-size: cover;
+}
+
+.button{
+ -fx-text-fill:black;
+ -fx-font-family:"Arial Narrow";
+ -fx-font-weight:bold;
+
+ -fx-effect:dropshadow(three-pass-box,rgba(0,0,0,0.6),5,0.0,0,1);
+}
+
+.button:hover{
+
+}
