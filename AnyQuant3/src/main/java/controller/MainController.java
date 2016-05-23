@@ -88,7 +88,7 @@ public class MainController {
         this.pushDataToModel(model, number);
         this.pushDailyModel(model,number,"2016-05-19");
 
-        return new ModelAndView("stock", model);
+        return new ModelAndView("singleStock", model);
     }
 
     /**
