@@ -2,7 +2,6 @@
 <%@ page import="model.stock.StockAttribute" %>
 <%@ page import="java.util.List" %>
 <%@ page import="util.enums.AttributeEnum" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -15,410 +14,15 @@
     <link rel="stylesheet" type="text/css" href="/css/stock.css"/>
     <script src="/js/echarts.min.js"></script>
     <script src="/js/jquery-2.2.3.min.js"></script>
-    <%--<script src="/html/js/test.js"></script>--%>
+    <script src="/js/stock.js"></script>
 </head>
 
 
 <body>
 <!-- <center> -->
-<button id="test">跳转</button>
-<script>
-    $(document).ready(function(){
-        $('#test').click(function(){
-           top.window.location.href = "test.jsp";
-        });
-    });
-</script>
 <h1 name="top">单股界面</h1>
 <hr>
 <div>
-
-    <%--<script>document.write("pages/js/test.js")</script>--%>
-        <script type="text/javascript">
-            var top;
-            var down;
-        </script>
-    <%--//LineChart--%>
-    <script>
-        function createLineChart(id, rawData, title, legend) {
-//            alert(title + " " + "length: " + rawData.length);
-            var LineChart = echarts.init(document.getElementById(id));
-
-            var allData = [];
-            for (var i = 0; i < rawData.length; i++) {
-                allData.push(splitLineData(rawData[i]));
-            }
-//            var data0 = splitLineData(rawData[0]);
-
-            function splitLineData(rawData) {
-                var categoryData = [];
-                var values = [];
-
-                for (var i = 0; i < rawData.length; i++) {
-                    categoryData.push(rawData[i].splice(0, 1)[0]);
-                    values.push(rawData[i].splice(0, 1)[0]);
-
-                }
-                return {
-                    categoryData: categoryData,
-                    values: values
-                };
-            }
-
-            function getSeries() {
-                var series = [];
-                for (var i = 0; i < legend.length; i++) {
-                    var item = {
-                        name: legend[i],
-                        type: 'line',
-                        data: allData[i].values
-                    };
-                    series.push(item);
-                }
-                ;
-                return series;
-
-            }
-
-            var mySeries = getSeries();
-
-            var option = {
-                title: {
-                    text: title
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                legend: {
-                    data: legend
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                toolbox: {
-                    <!--feature: {-->
-                    <!--saveAsImage: {}-->
-                    <!--}-->
-                },
-                xAxis: {
-                    type: 'category',
-                    boundaryGap: false,
-                    data: allData[0].categoryData
-                },
-                yAxis: {
-                    type: 'value',
-                    scale: true
-                },
-//                series:[
-//                    {
-//                        name:legend[0],
-//                        type:'line',
-//                        impl:allData[0].values
-//                    }
-//                ]
-                series: mySeries
-
-
-            };
-            LineChart.setOption(option);
-
-            return LineChart;
-        }
-
-    </script>
-
-    <%--//BarChart--%>
-    <script type="text/javascript">
-        function createBarChart(id, rawData, title, legend) {
-
-            var data0 = splitBarData(rawData);
-
-            function splitBarData(rawData) {
-                var categoryData = [];
-                var values0 = [];
-//                var values1 = [];
-//                var values2 = [];
-                for (var i = 0; i < rawData.length; i++) {
-                    categoryData.push(rawData[i].splice(0, 1)[0]);
-                    values0.push(rawData[i].splice(0, 1)[0]);
-//                    values1.push(rawData[i].splice(0, 1)[0]);
-//                    values2.push(rawData[i].splice(0, 1)[0]);
-                }
-                return {
-                    categoryData: categoryData,
-                    values0: values0
-//                    values1: values1,
-//                    values2: values2,
-                };
-            }
-
-            var BarChart = echarts.init(document.getElementById(id));
-
-            var option = {
-                title: {
-                    text: title
-                },
-
-                tooltip: {},
-                legend: {
-                    data: legend
-                },
-
-                xAxis: {data: data0.categoryData},
-                yAxis: {scale: true},
-                series: [{
-                    name: legend[0],
-                    type: 'bar',
-                    data: data0.values0
-                }]
-            };
-
-            BarChart.setOption(option);
-
-            return BarChart;
-        }
-    </script>
-
-    <%--//KLine--%>
-    <script type="text/javascript">
-        function createKLine(id) {
-            var KLineChart = echarts.init(document.getElementById(id));
-            var kLineData = <%=request.getAttribute("kLine")%>;
-            var data0 = splitData(kLineData);
-
-
-            function splitData(rawData) {
-                var categoryData = [];
-                var values = [];
-                for (var i = 0; i < rawData.length; i++) {
-                    categoryData.push(rawData[i].splice(0, 1)[0]);
-                    values.push(rawData[i])
-                }
-                return {
-                    categoryData: categoryData,
-                    values: values
-                };
-            }
-
-            function calculateMA(dayCount) {
-                var result = [];
-                for (var i = 0, len = data0.values.length; i < len; i++) {
-                    if (i < dayCount) {
-                        result.push('-');
-                        continue;
-                    }
-                    var sum = 0;
-                    for (var j = 0; j < dayCount; j++) {
-                        sum += data0.values[i - j][1];
-                    }
-                    result.push(sum / dayCount);
-                }
-                return result;
-            }
-
-
-            option = {
-                title: {
-                    text: 'K线图',
-                    left: 0
-                },
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'line'
-                    }
-                },
-                legend: {
-                    data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
-                },
-                grid: {
-                    left: '10%',
-                    right: '10%',
-                    bottom: '15%'
-                },
-                xAxis: {
-                    type: 'category',
-                    data: data0.categoryData,
-                    scale: true,
-                    boundaryGap: false,
-                    axisLine: {onZero: false},
-                    splitLine: {show: false},
-                    splitNumber: 20,
-                    min: 'dataMin',
-                    max: 'dataMax'
-                },
-                yAxis: {
-                    scale: true,
-                    boundaryGap: false,
-                    splitArea: {
-                        show: true
-                    }
-                },
-                dataZoom: [
-                    {
-                        type: 'inside',
-                        start: 50,
-                        end: 100
-                    },
-                    {
-                        show: true,
-                        type: 'slider',
-                        y: '90%',
-                        start: 50,
-                        end: 100
-                    }
-                ],
-                series: [
-                    {
-                        name: '日K',
-                        type: 'candlestick',
-                        data: data0.values,
-                        markLine: {
-                            symbol: ['none', 'none'],
-                            data: [
-                                [
-                                    {
-                                        <!--name: 'from lowest to highest',-->
-                                        <!--type: 'min',-->
-                                        <!--valueDim: 'lowest',-->
-                                        <!--symbol: 'circle',-->
-                                        <!--symbolSize: 10,-->
-                                        <!--label: {-->
-                                        <!--normal: {show: false},-->
-                                        <!--emphasis: {show: false}-->
-                                        <!--}-->
-                                    },
-                                    {
-//                                        type: 'max',
-//                                        valueDim: 'highest',
-//                                        symbol: 'circle',
-//                                        symbolSize: 10,
-//                                        label: {
-//                                            normal: {show: false},
-//                                            emphasis: {show: false}
-//                                        }
-                                    }
-                                ]
-
-                            ]
-                        }
-                    },
-                    {
-                        name: 'MA5',
-                        type: 'line',
-                        data: calculateMA(5),
-                        smooth: true,
-                        lineStyle: {
-                            normal: {opacity: 0.5}
-                        }
-                    },
-                    {
-                        name: 'MA10',
-                        type: 'line',
-                        data: calculateMA(10),
-                        smooth: true,
-                        lineStyle: {
-                            normal: {opacity: 0.5}
-                        }
-                    },
-                    {
-                        name: 'MA20',
-                        type: 'line',
-                        data: calculateMA(20),
-                        smooth: true,
-                        lineStyle: {
-                            normal: {opacity: 0.5}
-                        }
-                    },
-                    {
-                        name: 'MA30',
-                        type: 'line',
-                        data: calculateMA(30),
-                        smooth: true,
-                        lineStyle: {
-                            normal: {opacity: 0.5}
-                        }
-                    }
-
-                ]
-            };
-
-            KLineChart.setOption(option);
-            return KLineChart;
-        }
-
-
-    </script>
-
-    <%--PieChart--%>
-
-    <script type="text/javascript">
-        function createPieChart(id, title, legend, values) {
-            function getData() {
-                var data = [];
-                for (var i = 0; i < values.length; i++) {
-                    var item = {
-                        value: values[i],
-                        name: legend[i]
-                    };
-
-                    data.push(item);
-                }
-
-                return data;
-            }
-
-            var displayData = getData();
-            var pieChart = echarts.init(document.getElementById(id));
-            option = {
-                title: {
-                    text: title,
-                    x: 'center'
-                },
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
-                },
-                legend: {
-                    x: 'center',
-                    y: 'bottom',
-                    data: legend
-                },
-                calculable: true,
-                series: [
-                    {
-                        name: '半径模式',
-                        type: 'pie',
-                        radius: [50, 100],
-                        roseType: 'radius',
-                        label: {
-                            normal: {
-                                show: false
-                            },
-                            emphasis: {
-                                show: true
-                            }
-                        },
-                        lableLine: {
-                            normal: {
-                                show: false
-                            },
-                            emphasis: {
-                                show: true
-                            }
-                        },
-                        data: displayData
-                    }
-                ]
-            };
-            pieChart.setOption(option);
-        }
-    </script>
-
-
 
     <h3>
         <a name="single">基本行情</a>
@@ -439,7 +43,8 @@
 
         <script type="text/javascript">
 
-
+            var top;
+            var down;
 
             $(document).ready(function () {
 
@@ -452,7 +57,7 @@
 
                     var type = $(this).attr('id');
                     if(type=='tab1_kline'){
-                        top=createKLine("single_k_line");
+                        top=createKLine("single_k_line",<%=request.getAttribute("kLine")%>);
                         down = createBarChart('single_bar',<%=request.getAttribute("singleVolumeLine")%>, '成交量柱状图', ['volume']);
                         top.connect(down);
                         down.connect(top);
@@ -484,9 +89,9 @@
 
 
         <script>
-            <%--window.onload = createKLine("single_k_line");--%>
-            <%--window.onload = createBarChart('single_bar',<%=request.getAttribute("singleVolumeLine")%>, '成交量柱状图', ['volume']);--%>
-            top=createKLine("single_k_line");
+            var top;
+            var down;
+            top=createKLine("single_k_line",<%=request.getAttribute("kLine")%>);
             down = createBarChart('single_bar',<%=request.getAttribute("singleVolumeLine")%>, '成交量柱状图', ['volume']);
             top.connect(down);
             down.connect(top);
@@ -805,6 +410,8 @@
 </div>
 
 <!-- </center> -->
+
+
 
 </body>
 
