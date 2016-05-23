@@ -21,7 +21,7 @@ body a{
 	-moz-transition: 0.5s all;
 }
 .header {
-  background: url(../images/banner.jpg) no-repeat center top;
+  /*background: url(../images/banner.jpg) no-repeat center top;*/
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -219,21 +219,21 @@ ul.widget li.login:hover{
 }
 /*--features--*/
 .features{
-	background:#2f2f2f;
+
 }
 .feature_head{
 	position:relative;
 }
 .grid_1{
   width: 100%;
-  background:#2f2f2f;
-  padding:10% 0;
+  /*background:#2f2f2f;*/
+  padding:3% 0;
 }
 .features-grid span {
-  width: 176px;
-  height: 130px;
+  /*width: 176px;*/
+  /*height: 160px;*/
   display: inline-block;
-  background: url(../images/feature_icons.png) no-repeat 2px 0px;
+  /*background: url(../images/feature_icons.png) no-repeat 2px 0px;*/
 }
 .features-grid span.f-icon1 {
 	background-position:-145px -10px;
