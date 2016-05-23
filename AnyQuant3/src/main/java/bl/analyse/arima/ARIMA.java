@@ -1,9 +1,8 @@
 package bl.analyse.arima;
 
 
-import arima.ARMAMath;
-
-import java.util.*;
+import java.util.Random;
+import java.util.Vector;
 
 
 public class ARIMA {

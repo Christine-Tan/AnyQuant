@@ -2,8 +2,6 @@ package bl.analyse.arima;
 
 import java.util.Vector;
 
-import arima.ARMAMath;
-
 public class MA {
 
 	double[] stdoriginalData={};
