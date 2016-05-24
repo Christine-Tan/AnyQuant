@@ -23,9 +23,12 @@
     <!-- Google Fonts-->
     <link href='http://fonts.useso.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="/assets/js/Lightweight-Chart/cssCharts.css">
+    <script src="/js/jquery-2.2.3.min.js"></script>
 </head>
 
 <body>
+
+
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">
         <div class="navbar-header">
@@ -40,12 +43,29 @@
             <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
         </div>
 
-        <ul class="nav navbar-top-links navbar-right">
+        <ul class="nav navbar-top-links navbar">
+            <form class="form-inline text-center" style="padding-top: 20px" action="single.stock" method="get">
+                <%--<div class="form-group">--%>
+                    <%--<div class="row-inline" class="thumbnail" style="border: none">--%>
+                        <input type="text" id="search" name="number" class="form-control" placeholder="请输入股票代码"/>
+                        <input type="submit" value="搜索">
+                    <%--</div>--%>
+                <%--</div>--%>
+            </form>
+            <%String number = (String)request.getSession().getAttribute("number");
+            %>
+            <script type="text/javascript">
+                var text = <%=number%>;
+                document.getElementById("search").value=text.number;
+            </script>
+
+            <%--<script>window.onload=initSearch()</script>--%>
 
             <!--在此添加横向导航-->
 
         </ul>
     </nav>
+
     <!--/. NAV TOP  -->
     <nav class="navbar-default navbar-side" role="navigation">
         <div class="sidebar-collapse">
@@ -135,7 +155,8 @@
 <!-- /. WRAPPER  -->
 <!-- JS Scripts-->
 <!-- jQuery Js -->
-<script src="/assets/js/jquery-1.10.2.js"></script>
+<%--<script src="/assets/js/jquery-1.10.2.js"></script>--%>
+
 <!-- Bootstrap Js -->
 <script src="/assets/js/bootstrap.min.js"></script>
 
@@ -153,6 +174,8 @@
 
 <!-- Custom Js -->
 <script src="/assets/js/custom-scripts.js"></script>
+
+
 
 <script>
 

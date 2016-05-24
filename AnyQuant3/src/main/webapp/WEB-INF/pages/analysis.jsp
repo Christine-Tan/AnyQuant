@@ -41,7 +41,20 @@
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
-
+            <form class="form-inline text-center" style="padding-top: 20px" action="single.analysis" method="get">
+                <%--<div class="form-group">--%>
+                <%--<div class="row-inline" class="thumbnail" style="border: none">--%>
+                <input type="text" id="search" name="number" class="form-control" placeholder="请输入股票代码"/>
+                <input type="submit" value="搜索">
+                <%--</div>--%>
+                <%--</div>--%>
+            </form>
+            <%String number = (String)request.getSession().getAttribute("number");
+            %>
+            <script type="text/javascript">
+                var text = <%=number%>;
+                document.getElementById("search").value=text.number;
+            </script>
             <!--在此添加横向导航-->
 
         </ul>
