@@ -60,7 +60,7 @@ public class StockController {
      *
      * @return 一日分时图数据与股票历史数据
      */
-    @RequestMapping(value = "*.stock", method = {RequestMethod.POST})
+    @RequestMapping(value = "*.stock", method = {RequestMethod.GET})
     public ModelAndView getStock(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
         //获取URL参数
@@ -79,7 +79,7 @@ public class StockController {
     }
 
 
-    @RequestMapping(value = "*.history", method = {RequestMethod.POST})
+    @RequestMapping(value = "*.history", method = {RequestMethod.GET})
     //返回StockVO历史数据
     public ModelAndView getHistory(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
@@ -91,7 +91,7 @@ public class StockController {
     }
 
 
-    @RequestMapping(value = "*.analysis", method = {RequestMethod.POST})
+    @RequestMapping(value = "*.analysis", method = {RequestMethod.GET})
     public ModelAndView getAnalysis(HttpServletRequest httpServletRequest)
             throws NotFoundException, BadInputException, JsonProcessingException {
         //获取URL参数,StockVO

@@ -39,7 +39,7 @@ public class IndustryController {
         getStockService = BLFactory.getInstance().getGetStockService();
     }
 
-    @RequestMapping(value = "*.industry", method = RequestMethod.POST)
+    @RequestMapping(value = "*.industry", method = RequestMethod.GET)
     public ModelAndView getIndustry(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
 

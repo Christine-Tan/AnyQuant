@@ -140,9 +140,7 @@ public class SingleViewImpl implements SingleViewService {
         myChartSeries.add(series2);
         myChartSeries.add(series3);
 
-        LinearChartVO linearChartVO = new LinearChartVO(myChartSeries, LinearChartType.RSI);
-
-        return linearChartVO;
+        return new LinearChartVO(myChartSeries, LinearChartType.RSI);
     }
 
     @Override
