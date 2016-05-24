@@ -11,6 +11,7 @@ import model.common.MyChartSeries;
 import model.stock.StockVO;
 import po.StockPO;
 import model.stock.ConditionSelect;
+import util.constant.StockConstant;
 import util.enums.LinearChartType;
 import util.enums.PeriodEnum;
 import util.enums.TypeOfVolumn;
@@ -49,6 +50,12 @@ public class GetStockStub implements GetStockService {
     public StockVO getLastestStock(String num, int numOfDays, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException {
         StockPO po = stockDataService.getStock(num);
         return new StockVO(po, "2016-04-22", "2016-05-22",fields);
+    }
+
+    @Override
+    public StockVO getStock(String name, String start, String end) throws NotFoundException, BadInputException {
+        StockPO po = stockDataService.getStock(name);
+        return new StockVO(po,start,end, StockConstant.AllFields);
     }
 
     @Override

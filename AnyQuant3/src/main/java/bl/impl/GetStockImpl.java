@@ -125,6 +125,11 @@ public class GetStockImpl implements GetStockService {
         return vo;
     }
 
+    @Override
+    public StockVO getStock(String name, String start, String end) throws NotFoundException, BadInputException {
+        return this.getStock(name,start,end,StockConstant.AllFields,null);
+    }
+
     /**
      * 先在缓存中找某只股票的PO,没有再从数据层获得
      *
