@@ -1,7 +1,10 @@
 package controller;
 
 import bl.factory.BLFactory;
-import bl.service.*;
+import bl.service.BarChartService;
+import bl.service.GetStockService;
+import bl.service.PieChartService;
+import bl.service.SingleViewService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import model.analyse.RiseAndFallVO;
 import model.barchart.MixSingleVolumeVO;
@@ -9,7 +12,6 @@ import model.barchart.SingleVolumeVO;
 import model.barchart.VolumeVO;
 import model.common.LinearChartVO;
 import model.common.PieChartVO;
-import model.industry.IndustryVO;
 import model.stock.BasicSingleVO;
 import model.stock.StockVO;
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import util.constant.StockConstant;
-import util.enums.IndustryPeriodEnum;
 import util.enums.PeriodEnum;
 import util.exception.BadInputException;
 import util.exception.NotFoundException;
@@ -25,7 +26,6 @@ import util.json.JsonConverter;
 import util.time.DateCount;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,8 +42,6 @@ public class MainController {
 
     private SingleViewService singleViewService;
 
-    private IndustryViewService industryViewService;
-
     private BarChartService barChartService;
 
     private PieChartService pieChartService;
@@ -51,7 +49,6 @@ public class MainController {
     public MainController() throws IOException, NotFoundException {
         getStockService = BLFactory.getInstance().getGetStockService();
         singleViewService = BLFactory.getInstance().getSingleViewService();
-        industryViewService = BLFactory.getInstance().getIndustryViewService();
         barChartService = BLFactory.getInstance().getBarChartService();
         pieChartService = BLFactory.getInstance().getPieChartService();
     }
@@ -69,14 +66,13 @@ public class MainController {
      * 界面传入参数获取股票信息的主方法
      *
      * @param httpServletRequest 请求
-     * @param response           返回结果
      * @return 股票信息
      * @throws NotFoundException 无数据
      * @throws IOException       IO异常
      * @throws BadInputException 输入参数格式有误
      */
-    @RequestMapping(value = "*.stock", method = {RequestMethod.POST})
-    public ModelAndView getStock(HttpServletRequest httpServletRequest, HttpServletResponse response)
+    @RequestMapping(value = "/stock", method = {RequestMethod.POST})
+    public ModelAndView getStock(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
         //获取URL参数
         String number = httpServletRequest.getParameter("number");
@@ -121,10 +117,6 @@ public class MainController {
         //数据分析结果
         this.pushAnalyseModel(model, stockVO);
 
-        //行业数据模型
-        String industryName = getStockService.getIndustryName(number);
-        IndustryPeriodEnum industryPeriod = IndustryPeriodEnum.FOURTH;
-        this.pushIndustryModel(model, industryName, industryPeriod);
     }
 
     /**
@@ -180,38 +172,6 @@ public class MainController {
         model.put("stockRiseList", stockRiseList);
     }
 
-    /**
-     * 将数据分析结果情况加入model以返回界面
-     *
-     * @param model
-     * @param industryName
-     * @param industryPeriod
-     * @throws NotFoundException
-     * @throws BadInputException
-     * @throws JsonProcessingException
-     */
-    private void pushIndustryModel(Map<String, Object> model, String industryName, IndustryPeriodEnum industryPeriod) throws NotFoundException, BadInputException, JsonProcessingException {
-        //行业基本信息VO
-        IndustryVO industryVO = industryViewService.getBasicIndustryInfo(industryName, industryPeriod);
-        model.put("industryVO", industryVO);
-
-        //行业价格折线图与成交量
-        VolumeVO industryVolumeData = industryViewService.getIndustryVolume(industryName, industryPeriod);
-        LinearChartVO comparePriceData = industryViewService.getCompareLinearChartVO(industryName, industryPeriod);
-        LinearChartVO industryPriceData = industryViewService.getIndustryPrice(industryName, industryPeriod);
-
-        List<String> industryPriceLine = JsonConverter.jsonOfLinearChartVO(industryPriceData);
-        List<String> comparePriceLine = JsonConverter.jsonOfLinearChartVO(comparePriceData);
-        String volume = JsonConverter.jsonOfVolumeVO(industryVolumeData);
-
-        model.put("industryPriceLine", industryPriceLine);
-        model.put("comparePriceLine", comparePriceLine);
-        model.put("industryVolume", volume);
-
-        //行业股票涨跌幅排行
-        List<RiseAndFallVO> industryRiseList = industryViewService.getRiseAndFallList();
-        model.put("industryRiseList", industryRiseList);
-    }
 
 
     /**
