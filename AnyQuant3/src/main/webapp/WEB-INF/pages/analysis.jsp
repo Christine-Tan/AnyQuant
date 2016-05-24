@@ -52,27 +52,20 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a class="active-menu" href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                    <a href="single.stock"><i class="fa fa-dashboard"></i> SingleStock</a>
                 </li>
                 <li>
-                    <a href="ui-elements.html"><i class="fa fa-desktop"></i> UI Elements</a>
+                    <a href="analysis.industry"><i class="fa fa-desktop"></i> Industry</a>
                 </li>
                 <li>
-                    <a href="chart.html"><i class="fa fa-bar-chart-o"></i> Charts</a>
+                    <a class="active-menu" href="single.analysis"><i class="fa fa-bar-chart-o"></i> Analysis</a>
                 </li>
                 <li>
-                    <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
-                </li>
-
-                <li>
-                    <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
-                </li>
-                <li>
-                    <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
+                    <a href="all.markets"><i class="fa fa-qrcode"></i> Markets</a>
                 </li>
 
                 <li>
-                    <a href="empty.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
+                    <a href="single.history"><i class="fa fa-table"></i> history</a>
                 </li>
             </ul>
 
