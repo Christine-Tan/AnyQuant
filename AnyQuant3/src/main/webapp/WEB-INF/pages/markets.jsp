@@ -58,7 +58,7 @@
                     <a href="analysis.industry"><i class="fa fa-desktop"></i> Industry</a>
                 </li>
                 <li>
-                    <a class="active-menu" href="single.analysis"><i class="fa fa-bar-chart-o"></i> Analysis</a>
+                    <a href="single.analysis"><i class="fa fa-bar-chart-o"></i> Analysis</a>
                 </li>
                 <li>
                     <a class="active-menu" href="all.markets"><i class="fa fa-qrcode"></i> Markets</a>

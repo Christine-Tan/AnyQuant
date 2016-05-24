@@ -58,11 +58,11 @@
                     <a class="active-menu" href="analysis.industry"><i class="fa fa-desktop"></i> Industry</a>
                 </li>
                 <li>
-                    <a class="active-menu" href="single.analysis"><i class="fa fa-bar-chart-o"></i> Analysis</a>
+                    <a href="single.analysis"><i class="fa fa-bar-chart-o"></i> Analysis</a>
                 </li>
-                <li>
-                    <a href="all.markets"><i class="fa fa-qrcode"></i> Markets</a>
-                </li>
+                <%--<li>--%>
+                    <%--<a href="all.markets"><i class="fa fa-qrcode"></i> Markets</a>--%>
+                <%--</li>--%>
 
                 <li>
                     <a href="single.history"><i class="fa fa-table"></i> history</a>
