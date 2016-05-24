@@ -5,22 +5,24 @@ import bl.service.GetStockService;
 import bl.tool.FormatCheck;
 import data.dataservice.StockDataService;
 import data.factory.DataFactory;
+import model.analyse.RiseAndFallVO;
 import model.barchart.VolumeChartVO;
 import model.barchart.VolumeVO;
 import model.common.LinearChartVO;
 import model.common.MyChartSeries;
 import model.common.StockPriceInfo;
+import model.stock.ConditionSelect;
 import model.stock.StockAttribute;
 import model.stock.StockVO;
 import po.StockPO;
 import po.TradeInfoPO;
-import model.stock.ConditionSelect;
 import util.constant.StockConstant;
 import util.enums.LinearChartType;
 import util.enums.PeriodEnum;
 import util.enums.TypeOfVolumn;
 import util.exception.BadInputException;
 import util.exception.NotFoundException;
+import util.time.DateCount;
 import util.time.TimeConvert;
 
 import java.util.*;
@@ -32,24 +34,27 @@ public class GetStockImpl implements GetStockService {
 
     private StockDataService stockDataService;
 
-    private HashMap<String, StockPO> Cache;
+    private HashMap<String, StockPO> cachePO;
+
+    private List<RiseAndFallVO> riseAndFallVOs;
+
     private List<HashMap<String, String>> numAndName;
     private List<String> exchangeNames;
-    private HashMap<String, String> allNum;
+    private HashMap<String, String> numberAndName;
 
     public GetStockImpl() throws NotFoundException {
         stockDataService = DataFactory.getInstance().getStockDataService();
-        Cache = new HashMap<>();
+        cachePO = new HashMap<>();
         numAndName = new ArrayList<>();
         exchangeNames = new ArrayList<>();
-        allNum = new HashMap<>();
+        numberAndName = new HashMap<>();
         initial();
     }
 
     public void initial() throws NotFoundException {
-        allNum = stockDataService.getStockNumAndName();
+        numberAndName = stockDataService.getStockNumAndName();
 
-        Iterator<Map.Entry<String, String>> iter = allNum.entrySet().iterator();
+        Iterator<Map.Entry<String, String>> iter = numberAndName.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry<String, String> entry = iter.next();
             String number = entry.getKey();
@@ -91,21 +96,33 @@ public class GetStockImpl implements GetStockService {
 
     public StockVO getStock(String number, String start, String end, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException {
         FormatCheck.isDateBefore(start, end);
-        // 先在缓存中找某只股票的PO,没有再从数据层获得
-        StockPO po = Cache.get(number);
+        //从数据层调取数据包
+        StockPO po = this.getAndCachePO(number);
+        //变为VO
+        StockVO vo = new StockVO(po, start, end, fields);
+        //过滤数据域
+        vo = filter(vo, ranges);
+        return vo;
+    }
+
+    /**
+     * 先在缓存中找某只股票的PO,没有再从数据层获得
+     *
+     * @param number 股票
+     * @return
+     * @throws NotFoundException
+     */
+    private StockPO getAndCachePO(String number) throws NotFoundException {
+        StockPO po = cachePO.get(number) ;
         if (po == null) {
             if (number.equals("hs300")) {
                 po = stockDataService.getBenchmark(number);
-                fields = StockConstant.BenchFields;
             } else {
                 po = stockDataService.getStock(number);
             }
-
-            Cache.put(number, po);
+            cachePO.put(number, po);
         }
-        StockVO vo = new StockVO(po, start, end, fields);
-        vo = filter(vo, ranges);
-        return vo;
+        return po;
     }
 
     public VolumeVO getAmountInADayBarchart(String number, String date) throws NotFoundException {
@@ -139,6 +156,39 @@ public class GetStockImpl implements GetStockService {
         volumeVO.setLabelInfo("分时成交量统计图", "时间", "成交量/手");
 
         return volumeVO;
+    }
+
+    @Override
+    public List<RiseAndFallVO> getRiseAndFallList() {
+        String endDate = DateCount.getToday();
+        String startDate = DateCount.count(endDate, -30);
+
+        List<RiseAndFallVO> result = new ArrayList<>();
+        numberAndName = stockDataService.getStockNumAndName();
+
+        Iterator<Map.Entry<String, String>> iter = numberAndName.entrySet().iterator();
+        while (iter.hasNext()) {
+            //对于每一只股票
+            Map.Entry<String, String> entry = iter.next();
+            String stockNumber = entry.getKey();
+            String stockName = entry.getValue();
+            try {
+                StockVO stockVO = this.getStock(stockNumber,startDate,endDate,StockConstant.AllFields,null);
+                int numberOfData = stockVO.numberOfDays();
+                //获取昨日(今天不会有数据,数据包倒数第1个日期)涨跌幅
+                int dateIndex = numberOfData-1;
+                double change = stockVO.changeAtDay(dateIndex);
+                List<Double> prices = stockVO.pricelistAtDay(dateIndex);
+                double open = prices.get(0);
+                double risePercent = change/open * 100;
+                RiseAndFallVO riseAndFallVO = new RiseAndFallVO(stockName,risePercent);
+                result.add(riseAndFallVO);
+            } catch (NotFoundException | BadInputException e) {
+                e.printStackTrace();
+            }
+        }
+        Collections.sort(result);
+        return result;
     }
 
     @Override

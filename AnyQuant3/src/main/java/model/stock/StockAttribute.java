@@ -44,4 +44,24 @@ public class StockAttribute {
     public HashMap<String, String> getAttribute() {
         return attribute;
     }
+
+    public double getOpen(){
+        String open = this.attribute.get("open");
+        return Double.valueOf(open);
+    }
+
+    public double getClose(){
+        String open = this.attribute.get("close");
+        return Double.valueOf(open);
+    }
+
+    public double getHigh(){
+        String open = this.attribute.get("high");
+        return Double.valueOf(open);
+    }
+
+    public double getLow(){
+        String open = this.attribute.get("low");
+        return Double.valueOf(open);
+    }
 }

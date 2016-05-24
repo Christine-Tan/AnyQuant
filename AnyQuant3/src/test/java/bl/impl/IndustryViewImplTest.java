@@ -1,5 +1,6 @@
 package bl.impl;
 
+import model.analyse.RiseAndFallVO;
 import model.barchart.VolumeVO;
 import model.common.LinearChartVO;
 import model.industry.IndustryVO;
@@ -8,13 +9,14 @@ import util.enums.IndustryPeriodEnum;
 import util.exception.NotFoundException;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by kylin on 16/5/19.
  */
 public class IndustryViewImplTest {
 
-    IndustryViewImpl industryView;
+    private IndustryViewImpl industryView;
 
     public IndustryViewImplTest() throws IOException, NotFoundException {
         industryView = new IndustryViewImpl(new GetStockStub());
@@ -43,6 +45,15 @@ public class IndustryViewImplTest {
     public void getIndustryVolume() throws Exception {
         VolumeVO industryVolumeVO=industryView.getIndustryVolume("酒业", IndustryPeriodEnum.FIRST);
         System.out.println(industryVolumeVO.getList().size());
+    }
+
+    @Test
+    public void getRiseAndFallList() throws Exception {
+        List<RiseAndFallVO> riseAndFallVOs = industryView.getRiseAndFallList();
+        for (RiseAndFallVO vo:riseAndFallVOs){
+            System.out.println(vo.getRiseStr());
+            System.out.println(vo.getName());
+        }
     }
 
 }

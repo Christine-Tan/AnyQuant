@@ -9,108 +9,115 @@ import java.util.List;
 
 /**
  * 用于日期的处理
+ *
  * @author Lin
  */
 public class DateCount {
-	static SimpleDateFormat sdf;
+    static SimpleDateFormat sdf;
 
-	static {
-		DateCount.sdf = new SimpleDateFormat("yyyy-MM-dd");
-	}
-	
-	
-	
-	public static Date strToDate(String today){
-		Date date = null;
-		try {
-			date = sdf.parse(today);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		return date;
-		
-	}
-	
-	/**
-	 * 获得当前日期是星期几
-	 * @param date
-	 * @return
-	 */
-	public static int getWeekOfDate(String date){
-		Calendar c = Calendar.getInstance();
-		c.setTime(strToDate(date));
-		int d = c.get(Calendar.DAY_OF_WEEK)-1;
-		if(d==0){
-			d+=7;
-		}
-		return d;
-		
-	}
-	
-	/**
-	 * 将date类转化为规定格式string
-	 * @param date
-	 * @return
-	 */
-	public static String dateToStr(Date date){
-		return sdf.format(date);
-	}
-	
-	/**
-	 * 计算和某个个日期相隔若干天的日期
-	 * 
-	 * @param endDate
-	 * @param offset
-	 * @return 日期
-	 */
-	public static String count(String endDate,int offset){
-		Date date = null;
-		date = strToDate(endDate);
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		c.add(Calendar.DATE, offset);
-		date = c.getTime();
-		String beginDate = sdf.format(date);
-		return beginDate;
-	}
-	
-	/**
-	 * 获得两个日期间的所有日期
-	 * @param beginDate
-	 * @param endDate
-	 * @return 日期的列表
-	 */
-	//还未考虑结束日期在开始日期前的情况
-	public static List<String> splitDays(String beginDate,String endDate){
-		List<String> days = new ArrayList<String>();
-		if(beginDate.compareTo(endDate)<=0){
-			String date = new String(beginDate);
-			while(date.compareTo(endDate)<0){
-				days.add(date);
-				date = count(date, 1);
-			}
-			days.add(endDate);
-			
-			if(days.size()!=0){
-				return days;
-			}
-		}
-		
-		return null;
-		
-	}
+    static {
+        DateCount.sdf = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    public static String getToday() {
+        Date today = new Date();
+        return DateCount.dateToStr(today);
+    }
+
+    public static Date strToDate(String today) {
+        Date date = null;
+        try {
+            date = sdf.parse(today);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
+
+    }
+
+    /**
+     * 获得当前日期是星期几
+     *
+     * @param date
+     * @return
+     */
+    public static int getWeekOfDate(String date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(strToDate(date));
+        int d = c.get(Calendar.DAY_OF_WEEK) - 1;
+        if (d == 0) {
+            d += 7;
+        }
+        return d;
+
+    }
+
+    /**
+     * 将date类转化为规定格式string
+     *
+     * @param date
+     * @return
+     */
+    public static String dateToStr(Date date) {
+        return sdf.format(date);
+    }
+
+    /**
+     * 计算和某个个日期相隔若干天的日期
+     *
+     * @param endDate
+     * @param offset
+     * @return 日期
+     */
+    public static String count(String endDate, int offset) {
+        Date date = null;
+        date = strToDate(endDate);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, offset);
+        date = c.getTime();
+        String beginDate = sdf.format(date);
+        return beginDate;
+    }
+
+    /**
+     * 获得两个日期间的所有日期
+     *
+     * @param beginDate
+     * @param endDate
+     * @return 日期的列表
+     */
+    //还未考虑结束日期在开始日期前的情况
+    public static List<String> splitDays(String beginDate, String endDate) {
+        List<String> days = new ArrayList<String>();
+        if (beginDate.compareTo(endDate) <= 0) {
+            String date = new String(beginDate);
+            while (date.compareTo(endDate) < 0) {
+                days.add(date);
+                date = count(date, 1);
+            }
+            days.add(endDate);
+
+            if (days.size() != 0) {
+                return days;
+            }
+        }
+
+        return null;
+
+    }
 
     /**
      * 获得两个时间点之间的时间的字符串,格式为HH:mm:ss
      * 第三个参数为时间间隔
      *
-     * @param start HH:mm:ss
-     * @param end HH:mm:ss
+     * @param start           HH:mm:ss
+     * @param end             HH:mm:ss
      * @param intervalSeconds 单位是秒
      * @return
      */
-    public static List<String> getSeconds(String start,String end,int intervalSeconds){
+    public static List<String> getSeconds(String start, String end, int intervalSeconds) {
         ArrayList<String> strings = new ArrayList<>();
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
@@ -125,11 +132,11 @@ public class DateCount {
             long begin = c1.getTimeInMillis();
             long ends = c2.getTimeInMillis();
 
-            while (begin <= ends){
+            while (begin <= ends) {
                 startDate.setTime(begin);
                 String oneSecond = format.format(startDate);
                 strings.add(oneSecond);
-                begin += intervalSeconds*1000;
+                begin += intervalSeconds * 1000;
             }
 
         } catch (ParseException e) {
@@ -139,29 +146,31 @@ public class DateCount {
         return strings;
     }
 
-	/**
-	 * 计算两个日期间相隔的天数
-	 * @param beginDate
-	 * @param endDate
-	 * @return
-	 */
-	public static int getintervalDays(String beginDate,String endDate){
-		int days = (int)(((DateCount.strToDate(endDate).getTime() - DateCount.strToDate(beginDate).getTime())/86400000));
-		return days;
-	}
-
-	/**
-	 * 获得本月最后一天日期
-	 * @param date 日期
-	 * @return
+    /**
+     * 计算两个日期间相隔的天数
+     *
+     * @param beginDate
+     * @param endDate
+     * @return
      */
-	public static String getLastDayOfMonth(String date) throws ParseException {
-		date = date.substring(0,8) + "01";
-		Calendar cal = TimeConvert.covertToCalendar(date);
-		cal.add(Calendar.MONTH, 1);
-		cal.add(Calendar.DAY_OF_MONTH, -1);
-		return TimeConvert.getDisplayDate(cal);
-	}
+    public static int getintervalDays(String beginDate, String endDate) {
+        int days = (int) (((DateCount.strToDate(endDate).getTime() - DateCount.strToDate(beginDate).getTime()) / 86400000));
+        return days;
+    }
+
+    /**
+     * 获得本月最后一天日期
+     *
+     * @param date 日期
+     * @return
+     */
+    public static String getLastDayOfMonth(String date) throws ParseException {
+        date = date.substring(0, 8) + "01";
+        Calendar cal = TimeConvert.covertToCalendar(date);
+        cal.add(Calendar.MONTH, 1);
+        cal.add(Calendar.DAY_OF_MONTH, -1);
+        return TimeConvert.getDisplayDate(cal);
+    }
 
     /**
      * 获得从昨天开始最近的一个工作日

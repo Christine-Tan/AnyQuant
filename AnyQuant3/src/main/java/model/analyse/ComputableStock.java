@@ -31,7 +31,7 @@ public interface ComputableStock {
     List<Double> pricelistAtDay(int dayIndex);
 
     /**
-     * 获取此日期的涨跌价格(open - close)
+     * 获取此日期的涨跌价格(close - open)
      *
      * @param dayIndex 第几天
      * @return 涨跌价格

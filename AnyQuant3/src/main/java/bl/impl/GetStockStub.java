@@ -3,6 +3,7 @@ package bl.impl;
 import bl.service.GetStockService;
 import data.dataservice.StockDataService;
 import data.impl.stub.StockDataStub;
+import model.analyse.RiseAndFallVO;
 import model.barchart.VolumeChartVO;
 import model.barchart.VolumeVO;
 import model.common.LinearChartVO;
@@ -66,5 +67,10 @@ public class GetStockStub implements GetStockService {
             list.add(new VolumeChartVO(PeriodEnum.DAY,strToday,i+0.5));
         }
         return new VolumeVO(list, TypeOfVolumn.SINGLE);
+    }
+
+    @Override
+    public List<RiseAndFallVO> getRiseAndFallList() {
+        return null;
     }
 }

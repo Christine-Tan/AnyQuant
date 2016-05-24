@@ -1,6 +1,7 @@
 package bl.service;
 
 
+import model.analyse.RiseAndFallVO;
 import model.barchart.VolumeVO;
 import model.common.LinearChartVO;
 import model.stock.StockVO;
@@ -65,4 +66,10 @@ public interface GetStockService {
      */
     VolumeVO getAmountInADayBarchart(String number, String date) throws NotFoundException;
 
+    /**
+     * 获取所有股票涨跌幅排行榜
+     *
+     * @return 按照涨到跌(正到负)排序的股票
+     */
+    List<RiseAndFallVO> getRiseAndFallList();
 }

@@ -1,6 +1,7 @@
 package bl.impl;
 
 import bl.service.GetStockService;
+import model.analyse.RiseAndFallVO;
 import model.common.LinearChartVO;
 import model.common.MyChartSeries;
 import org.junit.Test;
@@ -53,4 +54,12 @@ public class GetStockImplTest {
 
     }
 
+    @Test
+    public void testGetRiseAndFallList() {
+        List<RiseAndFallVO> riseAndFallVOs = getStockService.getRiseAndFallList();
+        for (RiseAndFallVO vo:riseAndFallVOs){
+            System.out.println(vo.getRiseStr());
+            System.out.println(vo.getName());
+        }
+    }
 }

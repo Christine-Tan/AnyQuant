@@ -12,7 +12,7 @@ public class Industry {
     private String name;
 
     //股票集合
-    private List<StockVO>  stocks;
+    private List<StockVO> stocks;
 
     public Industry(String name, List<StockVO> stocks) {
         this.name = name;

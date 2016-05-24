@@ -90,7 +90,7 @@ public class StockVO implements ComputableStock {
                     String value = allatts.get(key);
                     if (value != null) {
                         double d = Double.parseDouble(value);
-                        DecimalFormat df = new DecimalFormat("");
+                        DecimalFormat df;
                         if (key.equals("volume")) {
                             df = new DecimalFormat("0");
                         } else {

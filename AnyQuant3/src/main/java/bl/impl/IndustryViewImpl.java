@@ -16,6 +16,7 @@ import model.industry.TypicalStockInfo;
 import model.stock.StockAttribute;
 import model.stock.StockVO;
 import po.StockPO;
+import util.calculate.NumberFormater;
 import util.constant.SomeConstant;
 import util.constant.StockConstant;
 import util.enums.IndustryPeriodEnum;
@@ -27,7 +28,6 @@ import util.exception.NotFoundException;
 import util.time.DateCount;
 import util.time.TimeConvert;
 
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.*;
 
@@ -41,8 +41,6 @@ public class IndustryViewImpl implements IndustryViewService {
     private GetStockService getStockService;
 
     private List<Industry> industryList;
-
-    private DecimalFormat df = new DecimalFormat("#.000");
 
     public IndustryViewImpl(GetStockService getStockService) throws NotFoundException {
         this.getStockService = getStockService;
@@ -66,8 +64,10 @@ public class IndustryViewImpl implements IndustryViewService {
                 String stockNumber = stocksInIndustry.get(stockName);
                 //获取一只股票数据
                 try {
-                    StockVO stockVO = getStockService.getStock(stockNumber, StockConstant.INDUSTRY_START_DATE,
-                            StockConstant.INDUSTRY_END_DATE,StockConstant.AllFields,null);
+                    //缓存最近两年的数据
+                    StockVO stockVO = getStockService.getStock(stockNumber,
+                            StockConstant.INDUSTRY_START_DATE,
+                            DateCount.getToday(), StockConstant.AllFields, null);
                     stockVOsInIndustry.add(stockVO);
                 } catch (NotFoundException | BadInputException e) {
                     e.printStackTrace();
@@ -97,6 +97,7 @@ public class IndustryViewImpl implements IndustryViewService {
         for (int i = 0; i < industryList.size(); i++) {
             if (industryList.get(i).getName().equals(industryName)) {
                 Industry industry = industryList.get(i);
+                //获取大数据包
                 List<StockVO> stockVOs = industry.getStocks();
                 String typicalName = "";
                 double typicalChange = 0;
@@ -113,7 +114,8 @@ public class IndustryViewImpl implements IndustryViewService {
 
                     List<StockAttribute> attributes = null;
                     try {
-                        attributes = stockVO.getAttributes(startDate,endDate);
+                        //获取指定季节内部的数据
+                        attributes = stockVO.getAttributes(startDate, endDate);
                     } catch (BadInputException e) {
                         e.printStackTrace();
                     }
@@ -157,13 +159,13 @@ public class IndustryViewImpl implements IndustryViewService {
                 }
 
                 //精确到小数点后三位
-                averagePrice = Double.valueOf(df.format(averagePrice));
-                averageChange = Double.valueOf(df.format(averageChange));
-                averageProfit = Double.valueOf(df.format(averageProfit));
-                totalVolume = Double.valueOf(df.format(totalVolume / 10000));
-                totalAmount = Double.valueOf(df.format(totalAmount / 1000000));
-                typicalPrice = Double.valueOf(df.format(typicalPrice));
-                typicalChange = Double.valueOf(df.format(typicalChange));
+                averagePrice = Double.valueOf(NumberFormater.formatDouble(averagePrice));
+                averageChange = Double.valueOf(NumberFormater.formatDouble(averageChange));
+                averageProfit = Double.valueOf(NumberFormater.formatDouble(averageProfit));
+                totalVolume = Double.valueOf(NumberFormater.formatDouble(totalVolume / 10000));
+                totalAmount = Double.valueOf(NumberFormater.formatDouble(totalAmount / 1000000));
+                typicalPrice = Double.valueOf(NumberFormater.formatDouble(typicalPrice));
+                typicalChange = Double.valueOf(NumberFormater.formatDouble(typicalChange));
                 IndustryBasicInfo industryBasicInfo = new IndustryBasicInfo(numberOfstocks, averagePrice, averageChange, averageProfit, totalVolume, totalAmount);
                 TypicalStockInfo typicalStockInfo = new TypicalStockInfo(typicalName, typicalPrice, typicalChange);
                 IndustryVO industryVO = new IndustryVO(industryName, industryBasicInfo, typicalStockInfo);
@@ -318,7 +320,6 @@ public class IndustryViewImpl implements IndustryViewService {
                     }
                     sumOfVolume = sumOfVolume / stockVOs.size();
                     VolumeChartVO volumeChartVO = new VolumeChartVO(PeriodEnum.DAY, stock.getAttributes().get(day).getDate(), sumOfVolume);
-//                    System.out.println(impl.getAttributes().get(day).getDate() + "   " + sumOfVolume);
                     volumeChartVOs.add(volumeChartVO);
                 }
                 VolumeVO industryVolumeVO = new VolumeVO(volumeChartVOs, TypeOfVolumn.INDUSTRY);
@@ -330,7 +331,41 @@ public class IndustryViewImpl implements IndustryViewService {
 
     @Override
     public List<RiseAndFallVO> getRiseAndFallList() {
-        return null;
+        List<RiseAndFallVO> result = new ArrayList<>();
+        //一个行业昨日涨跌幅排行榜单
+        String endDate = DateCount.getToday();
+        String startDate = DateCount.count(endDate, -30);
+        //所有行业
+        for (Industry industry : this.industryList) {
+            //一个行业
+            String industryName = industry.getName();
+            double rise = 0;
+            //行业内所有股票
+            List<StockVO> stocks = industry.getStocks();
+            int number = stocks.size();
+
+            for (StockVO stockVO : stocks) {
+                try {
+                    List<StockAttribute> recent30Days = stockVO.getAttributes(startDate,endDate);
+                    //计算昨日涨跌幅
+                    StockAttribute yesterday = recent30Days.get(recent30Days.size()-1);
+                    double open = yesterday.getOpen();
+                    double close = yesterday.getClose();
+                    //一只股票的涨跌幅
+                    double percent = (close-open)/open * 100;
+                    //求和
+                    rise += percent;
+                } catch (BadInputException e) {
+                    e.printStackTrace();
+                }
+            }
+            //算数平均
+            rise = rise/number;
+
+            result.add(new RiseAndFallVO(industryName,rise));
+        }
+        Collections.sort(result);
+        return result;
     }
 
 
