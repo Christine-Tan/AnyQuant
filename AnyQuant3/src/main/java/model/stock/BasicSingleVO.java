@@ -37,11 +37,6 @@ public class BasicSingleVO {
     private Double avgPb;
 
     /**
-     *  股票分析预测
-     */
-    private String conclusion;
-
-    /**
      *  心理指数
      */
     private Double psychologicalValue;
@@ -54,10 +49,9 @@ public class BasicSingleVO {
     public BasicSingleVO(){
 
     }
-    public BasicSingleVO(String stock_name, String stock_num, String conclusion) {
+    public BasicSingleVO(String stock_name, String stock_num) {
         this.stock_name = stock_name;
         this.stock_num = stock_num;
-        this.conclusion = conclusion;
     }
 
     public String getStock_name() {
@@ -66,10 +60,6 @@ public class BasicSingleVO {
 
     public String getStock_num() {
         return stock_num;
-    }
-
-    public String getConclusion() {
-        return conclusion;
     }
 
     public Double getPsychologicalValue() {
@@ -87,10 +77,6 @@ public class BasicSingleVO {
 
     public void setAvgPe(Double avgPe) {
         this.avgPe = avgPe;
-    }
-
-    public void setConclusion(String conclusion) {
-        this.conclusion = conclusion;
     }
 
     public Double getRiseAndFall() {

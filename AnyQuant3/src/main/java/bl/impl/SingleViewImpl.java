@@ -55,10 +55,6 @@ public class SingleViewImpl implements SingleViewService {
                 stockVO.getNumber(), DateCount.count(endDate, -150),
                 endDate, SomeConstant.field.all, new ArrayList<>());
 
-        //TODO，预测部份，BASICINFO要改
-//        basicSingleVO.setConclusion(
-//                getPredict(
-//                stasticbl.getAllVarianceOfPrice(startDate, endDate), stock_macd));
 
         //计算各种指标
 
