@@ -89,13 +89,13 @@ html, body{
 	height: 60px;
 	margin-right: 105px;
 }
-.nav {
-	list-style: none;
-	float: left;
-	font-weight: bold;
-	font-size: 14px;
-	line-height: 60px;
-}
+/*.nav {*/
+	/*list-style: none;*/
+	/*float: left;*/
+	/*font-weight: bold;*/
+	/*font-size: 14px;*/
+	/*line-height: 60px;*/
+/*}*/
 .nav li {
 	float: left;
 }
@@ -119,7 +119,7 @@ html, body{
 	height: 141px;
 	margin-top: -80px;
 	padding-top: 24px;
-	/*background: url(../img/sprite.png) no-repeat 0 -110px;*/
+	background: url(../img/sprite.png) no-repeat 0 -110px;
 	list-style: none;
 }
 .fixedNav li {
@@ -134,7 +134,7 @@ html, body{
 	display: block;
 	width: 16px;
 	height: 16px;
-	/*background: url(../img/sprite.png) no-repeat -40px -131px;*/
+	background: url(../img/sprite.png) no-repeat -40px -131px;
 	cursor: pointer;
 }
 .fixedNav .txt {
@@ -144,14 +144,14 @@ html, body{
 	top: 0;
 	width: 76px;
 	height: 19px;
-	/*background: url(../img/sprite.png) no-repeat 0 -80px;*/
+	background: url(../img/sprite.png) no-repeat 0 -80px;
 	color: #fff;
 	font-size: 12px;
 	line-height: 19px;
 	text-align: center;
 }
 .fixedNav .cur .icon {
-	/*background: url(../img/sprite.png) no-repeat -40px -110px;*/
+	background: url(../img/sprite.png) no-repeat -40px -110px;
 }
 /**内容**/
 .wrapBox {
