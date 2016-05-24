@@ -102,7 +102,15 @@ public class GetStockImpl implements GetStockService {
         StockVO vo = new StockVO(po, start, end, fields);
         //过滤数据域
         vo = filter(vo, ranges);
+        //获取股票名称
+        String name = this.getStockName(number);
+        vo.setInfo(name, start, end);
         return vo;
+    }
+
+    @Override
+    public StockVO getStock(String name, String start, String end) throws NotFoundException, BadInputException {
+        return this.getStock(name,start,end,StockConstant.AllFields,null);
     }
 
     /**
