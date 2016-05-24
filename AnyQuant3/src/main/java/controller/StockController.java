@@ -58,41 +58,58 @@ public class StockController {
 
     /**
      * 界面传入参数获取股票信息的主方法
+     * 主界面的大输入框
      *
      * @return 一日分时图数据与股票历史数据
      */
-    @RequestMapping(value = "*.stock", method = {RequestMethod.GET})
+    @RequestMapping(value = "*.search", method = {RequestMethod.GET})
     public ModelAndView getStock(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
-        //获取URL参数
-        String number = httpServletRequest.getParameter("number");
-
+        //从用户的输入取参数
+        String number = (String) httpServletRequest.getAttribute("number");
+        //将新的参数加入session
         HttpSession session = httpServletRequest.getSession();
-
+        //封装成json格式
         StockNumber stockNumber= new StockNumber(number);
         String str = JsonConverter.jsonOfObject(stockNumber);
-
+        //If an object of the same name is already bound to the session,the object is replaced.
         session.setAttribute("number",str);
 
-        StockVO stockVO = getStockService.getStock(number, startDate, endDate);
-
         Map<String, Object> model = new HashMap<>();
-
+        StockVO stockVO = getStockService.getStock(number, startDate, endDate);
         //一日分时图数据(分时价格折线图与成交量)
         pushData.pushDailyModel(model,number,"2016-05-19");
         //单只股票基本信息(K线图,成交量柱状图)
         pushData.pushStockModel(model,stockVO);
-
         model.put("number",number);
         return new ModelAndView("singleStock", model);
     }
 
+    @RequestMapping(value = "*.nosearch", method = {RequestMethod.GET})
+    public ModelAndView notChangeStock(HttpServletRequest httpServletRequest)
+            throws NotFoundException, IOException, BadInputException {
+
+        //直接从session取参数
+        HttpSession session = httpServletRequest.getSession();
+        String number = (String) session.getAttribute("number");
+
+        Map<String, Object> model = new HashMap<>();
+        StockVO stockVO = getStockService.getStock(number, startDate, endDate);
+        //一日分时图数据(分时价格折线图与成交量)
+        pushData.pushDailyModel(model,number,"2016-05-19");
+        //单只股票基本信息(K线图,成交量柱状图)
+        pushData.pushStockModel(model,stockVO);
+        model.put("number",number);
+        return new ModelAndView("singleStock", model);
+    }
 
     @RequestMapping(value = "*.history", method = {RequestMethod.GET})
     //返回StockVO历史数据
     public ModelAndView getHistory(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
-        String number = httpServletRequest.getParameter("number");
+        HttpSession session = httpServletRequest.getSession();
+        String number = (String) session.getAttribute("number");
+
         StockVO stockVO = getStockService.getStock(number, startDate, endDate);
 
         Map<String, Object> model = new HashMap<>();
@@ -105,7 +122,9 @@ public class StockController {
     public ModelAndView getAnalysis(HttpServletRequest httpServletRequest)
 
             throws NotFoundException, BadInputException, JsonProcessingException {
-        String number = httpServletRequest.getParameter("number");
+        HttpSession session = httpServletRequest.getSession();
+        String number = (String) session.getAttribute("number");
+
         //获取URL参数,StockVO
         StockVO stockVO = getStockService.getStock(number, startDate, endDate);
 
