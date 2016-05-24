@@ -40,7 +40,7 @@ public class StockController {
     /**
      * 暂存主界面用户输入的股票
      */
-    private String stockNumber;
+    private static String stockNumber;
 
     private String startDate;
     private String endDate;
@@ -65,7 +65,6 @@ public class StockController {
             throws NotFoundException, IOException, BadInputException {
         //获取URL参数
         String number = httpServletRequest.getParameter("number");
-        this.stockNumber = number;
         StockVO stockVO = getStockService.getStock(number, startDate, endDate);
 
         Map<String, Object> model = new HashMap<>();
@@ -75,6 +74,7 @@ public class StockController {
         //单只股票基本信息(K线图,成交量柱状图)
         pushData.pushStockModel(model,stockVO);
 
+        model.put("number",number);
         return new ModelAndView("singleStock", model);
     }
 
@@ -83,7 +83,8 @@ public class StockController {
     //返回StockVO历史数据
     public ModelAndView getHistory(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
-        StockVO stockVO = getStockService.getStock(stockNumber, startDate, endDate);
+        String number = httpServletRequest.getParameter("number");
+        StockVO stockVO = getStockService.getStock(number, startDate, endDate);
 
         Map<String, Object> model = new HashMap<>();
         model.put("stockVO", stockVO);
@@ -93,9 +94,11 @@ public class StockController {
 
     @RequestMapping(value = "*.analysis", method = {RequestMethod.GET})
     public ModelAndView getAnalysis(HttpServletRequest httpServletRequest)
+
             throws NotFoundException, BadInputException, JsonProcessingException {
+        String number = httpServletRequest.getParameter("number");
         //获取URL参数,StockVO
-        StockVO stockVO = getStockService.getStock(stockNumber, startDate, endDate);
+        StockVO stockVO = getStockService.getStock(number, startDate, endDate);
 
         Map<String, Object> model = new HashMap<>();
         //数据分析结果

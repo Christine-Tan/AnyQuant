@@ -127,13 +127,13 @@ public class SingleViewImpl implements SingleViewService {
     @Override
     public LinearChartVO getStockRSI(StockVO stockVO) throws BadInputException, NotFoundException {
 
-        HashMap<String, Double> EMA6 = strategy.calculateRSI(stockVO, 6);
-        HashMap<String, Double> EMA12 = strategy.calculateRSI(stockVO, 12);
-        HashMap<String, Double> EMA50 = strategy.calculateRSI(stockVO, 25);
+        HashMap<String, Double> RSI6 = strategy.calculateRSI(stockVO, 6);
+        HashMap<String, Double> RSI12 = strategy.calculateRSI(stockVO, 12);
+        HashMap<String, Double> RSI25 = strategy.calculateRSI(stockVO, 25);
 
-        MyChartSeries series1 = new MyChartSeries("6日指标", EMA6);
-        MyChartSeries series2 = new MyChartSeries("12日指标", EMA12);
-        MyChartSeries series3 = new MyChartSeries("24日指标", EMA50);
+        MyChartSeries series1 = new MyChartSeries("6日指标", RSI6);
+        MyChartSeries series2 = new MyChartSeries("12日指标", RSI12);
+        MyChartSeries series3 = new MyChartSeries("24日指标", RSI25);
 
         List<MyChartSeries> myChartSeries = new ArrayList<>();
         myChartSeries.add(series1);
