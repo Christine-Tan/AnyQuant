@@ -72,7 +72,7 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a class="active-menu" href="single.stock" ><i class="fa fa-dashboard"></i> SingleStock</a>
+                    <a class="active-menu" href="single.search" ><i class="fa fa-dashboard"></i> SingleStock</a>
                 </li>
                 <li>
                     <a href="analysis.industry" ><i class="fa fa-desktop"></i> Industry</a>
