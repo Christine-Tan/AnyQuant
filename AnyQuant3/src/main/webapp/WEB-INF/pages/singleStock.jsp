@@ -52,28 +52,34 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a class="active-menu" href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
-                </li>
-                <li>
-                    <a href="ui-elements.html"><i class="fa fa-desktop"></i> UI Elements</a>
-                </li>
-                <li>
-                    <a href="chart.html"><i class="fa fa-bar-chart-o"></i> Charts</a>
-                </li>
-                <li>
-                    <a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>
-                </li>
 
-                <li>
-                    <a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>
+                    <%--<a class="active-menu" action="single.stock"><i class="fa fa-dashboard"></i> SingleStock</a>--%>
+                    <div action="single.stock" style="height:50px;color:white;"><i class="fa fa-dashboard"></i> SingleStock</div>
                 </li>
                 <li>
-                    <a href="form.html"><i class="fa fa-edit"></i> Forms </a>
+                    <%--<a action="/industry" name = "industry"><i class="fa fa-desktop"></i> Industry</a>--%>
+                    <div action="/industry" style="height:50px;color:white"><i class="fa fa-desktop"></i> Industry</div>
                 </li>
+                <%--<li>--%>
+                    <%--<a href="ui-elements.html"><i class="fa fa-desktop"></i> UI Elements</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                    <%--<a href="chart.html"><i class="fa fa-bar-chart-o"></i> Charts</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                    <%--<a href="tab-panel.html"><i class="fa fa-qrcode"></i> Tabs & Panels</a>--%>
+                <%--</li>--%>
 
-                <li>
-                    <a href="empty.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
-                </li>
+                <%--<li>--%>
+                    <%--<a href="table.html"><i class="fa fa-table"></i> Responsive Tables</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                    <%--<a href="form.html"><i class="fa fa-edit"></i> Forms </a>--%>
+                <%--</li>--%>
+
+                <%--<li>--%>
+                    <%--<a href="empty.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>--%>
+                <%--</li>--%>
             </ul>
 
         </div>
