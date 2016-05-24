@@ -71,7 +71,7 @@ public class MainController {
      * @throws IOException       IO异常
      * @throws BadInputException 输入参数格式有误
      */
-    @RequestMapping(value = "/stock", method = {RequestMethod.POST})
+    @RequestMapping(value = "*.stock", method = {RequestMethod.POST})
     public ModelAndView getStock(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
         //获取URL参数
