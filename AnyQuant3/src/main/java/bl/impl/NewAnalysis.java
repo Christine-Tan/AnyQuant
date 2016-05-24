@@ -3,12 +3,14 @@ package bl.impl;
 import bl.analyse.TechnicalAnalysisStrategy;
 import bl.service.GetStockService;
 import model.stock.StockVO;
+import util.calculate.MyHashItem;
+import util.calculate.MySort;
 import util.exception.BadInputException;
 import util.exception.NotFoundException;
 import util.time.DateCount;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by kylin on 16/5/24.
@@ -28,19 +30,28 @@ public class NewAnalysis {
         Map<String, Double> rsi14 =  analysisStrategy.calculateRSI(stockVO,14);
         Map<String, Double> rsi24 =  analysisStrategy.calculateRSI(stockVO,24);
 
-        Set<Map.Entry<String, Double>> set14 = rsi14.entrySet();
+        List<MyHashItem> list6 = MySort.sortHashmapByKey(rsi6);
+        List<MyHashItem> list14 = MySort.sortHashmapByKey(rsi14);
+        List<MyHashItem> list24 = MySort.sortHashmapByKey(rsi24);
 
+        int size = list14.size();
+        double lastest6 = (double) list6.get(size-1).getValue();
+        double lastest14 = (double) list14.get(size-1).getValue();
+        double lastest24 = (double) list24.get(size-1).getValue();
 
-//        三．RSI指标的使用方法：
-// 当n=14时，指数最具代表性。
-// 当某证券的RSI升至70时，代表该证券已被超买（Overbought），投资者应考虑出售该证券。
-// 相反，当证券RSI跌至30时，代表证券被超卖（Oversold），投资者应购入该证券。
-
-
+        StringBuilder result = new StringBuilder();
+        result.append("从RSI指数分析来看,短期内");
+        if(lastest14 >= 70){
+            result.append("股票14日RSI数值升至70,代表该证券已被超买,投资者应考虑出售该证券.");
+        } else if(lastest14 <= 30){
+            result.append("股票14日RSI数值跌至30，代表证券被超卖（Oversold），投资者应购入该证券。");
+        } else {
+            result.append("股票14日RSI数值在50左右,无明显买卖信号");
+        }
 //
 //        2，RSI一般选用6日、12日、24日作为参考基期，基期越长越有趋势性(慢速RSI)，基期越短越有敏感性，(快速RSI)。
 // 当快速RSI由下往上突破慢速RSI时，为买进时机;当快速RSI由上而下跌破慢速RSI时，为卖出时机。
-        return "";
+        return result.toString();
     }
 
 }
