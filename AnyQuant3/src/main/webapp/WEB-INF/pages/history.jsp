@@ -65,7 +65,7 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a href="single.stock"><i class="fa fa-dashboard"></i> SingleStock</a>
+                    <a href="single.search"><i class="fa fa-dashboard"></i> SingleStock</a>
                 </li>
                 <li>
                     <a href="analysis.industry"><i class="fa fa-desktop"></i> Industry</a>
