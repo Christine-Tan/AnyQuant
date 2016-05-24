@@ -4,6 +4,7 @@ import bl.factory.BLFactory;
 import bl.impl.PushData;
 import bl.service.GetStockService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import model.stock.StockNumber;
 import model.stock.StockVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import util.exception.BadInputException;
 import util.exception.NotFoundException;
+import util.json.JsonConverter;
 import util.time.DateCount;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +68,11 @@ public class StockController {
         String number = httpServletRequest.getParameter("number");
 
         HttpSession session = httpServletRequest.getSession();
-        session.setAttribute("number",number);
+
+        StockNumber stockNumber= new StockNumber(number);
+        String str = JsonConverter.jsonOfObject(stockNumber);
+
+        session.setAttribute("number",str);
 
         StockVO stockVO = getStockService.getStock(number, startDate, endDate);
 
