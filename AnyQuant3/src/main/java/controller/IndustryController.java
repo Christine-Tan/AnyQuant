@@ -39,11 +39,11 @@ public class IndustryController {
         getStockService = BLFactory.getInstance().getGetStockService();
     }
 
-    @RequestMapping(value = "*.industry", method = RequestMethod.POST)
+    @RequestMapping(value = "*.industry", method = RequestMethod.GET)
     public ModelAndView getIndustry(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
 
-        //行业数据模型
+        //行业数据模型 TODO 行业名称输入
 //        String industryName = getStockService.getIndustryName(number);
         String industryName = "酒业";
         IndustryPeriodEnum industryPeriod = IndustryPeriodEnum.FOURTH;

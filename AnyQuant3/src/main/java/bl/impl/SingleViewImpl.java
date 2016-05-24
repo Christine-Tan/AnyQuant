@@ -1,11 +1,15 @@
 package bl.impl;
 
-import bl.service.GetStockService;
-import bl.service.SingleViewService;
 import bl.analyse.SingleStatisticBLService;
 import bl.analyse.TechnicalAnalysis;
 import bl.analyse.TechnicalAnalysisStrategy;
+import bl.service.GetStockService;
+import bl.service.SingleViewService;
 import model.analyse.ARBRresult;
+import model.analyse.MACDResult;
+import model.common.LinearChartVO;
+import model.common.MyChartSeries;
+import model.stock.BasicSingleVO;
 import model.stock.StockAttribute;
 import model.stock.StockVO;
 import util.calculate.LinearRegression;
@@ -16,13 +20,8 @@ import util.enums.LinearChartType;
 import util.exception.BadInputException;
 import util.exception.NotFoundException;
 import util.time.DateCount;
-import model.common.LinearChartVO;
-import model.common.MyChartSeries;
-import model.stock.BasicSingleVO;
-import model.analyse.MACDResult;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -128,30 +127,28 @@ public class SingleViewImpl implements SingleViewService {
     @Override
     public LinearChartVO getStockRSI(StockVO stockVO) throws BadInputException, NotFoundException {
 
-        HashMap<String, Double> EMA6 = strategy.calculateRSI(stockVO, 6);
-        HashMap<String, Double> EMA12 = strategy.calculateRSI(stockVO, 12);
-        HashMap<String, Double> EMA50 = strategy.calculateRSI(stockVO, 25);
+        Map<String, Double> RSI6 = strategy.calculateRSI(stockVO, 6);
+        Map<String, Double> RSI12 = strategy.calculateRSI(stockVO, 12);
+        Map<String, Double> RSI25 = strategy.calculateRSI(stockVO, 25);
 
-        MyChartSeries series1 = new MyChartSeries("6日指标", EMA6);
-        MyChartSeries series2 = new MyChartSeries("12日指标", EMA12);
-        MyChartSeries series3 = new MyChartSeries("24日指标", EMA50);
+        MyChartSeries series1 = new MyChartSeries("6日指标", RSI6);
+        MyChartSeries series2 = new MyChartSeries("12日指标", RSI12);
+        MyChartSeries series3 = new MyChartSeries("24日指标", RSI25);
 
         List<MyChartSeries> myChartSeries = new ArrayList<>();
         myChartSeries.add(series1);
         myChartSeries.add(series2);
         myChartSeries.add(series3);
 
-        LinearChartVO linearChartVO = new LinearChartVO(myChartSeries, LinearChartType.RSI);
-
-        return linearChartVO;
+        return new LinearChartVO(myChartSeries, LinearChartType.RSI);
     }
 
     @Override
     public LinearChartVO getStockEMA(StockVO stockVO) throws BadInputException, NotFoundException {
 
-        HashMap<String, Double> EMA6 = strategy.calculateEMA(stockVO, 6);
-        HashMap<String, Double> EMA12 = strategy.calculateEMA(stockVO, 12);
-        HashMap<String, Double> EMA50 = strategy.calculateEMA(stockVO, 35);
+        Map<String, Double> EMA6 = strategy.calculateEMA(stockVO, 6);
+        Map<String, Double> EMA12 = strategy.calculateEMA(stockVO, 12);
+        Map<String, Double> EMA50 = strategy.calculateEMA(stockVO, 35);
 
         MyChartSeries ema6s = new MyChartSeries("6日指数", EMA6);
         MyChartSeries ema12s = new MyChartSeries("12日指数", EMA12);

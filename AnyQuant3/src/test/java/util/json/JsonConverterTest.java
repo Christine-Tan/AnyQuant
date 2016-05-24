@@ -8,6 +8,7 @@ import bl.service.SingleViewService;
 import model.barchart.VolumeVO;
 import model.common.LinearChartVO;
 import model.common.PieChartVO;
+import model.stock.StockNumber;
 import model.stock.StockVO;
 import org.junit.Test;
 import util.constant.StockConstant;
@@ -35,9 +36,10 @@ public class JsonConverterTest {
 
     @Test
     public void jsonOfObject() throws Exception {
-        StockVO stockVO = getStockService.getStock(
-                "sh600519","2016-01-01","2016-05-19", StockConstant.AllFields,null);
-        System.out.println(JsonConverter.jsonOfObject(stockVO));
+//        StockVO stockVO = getStockService.getStock(
+//                "sh600519","2016-01-01","2016-05-19", StockConstant.AllFields,null);
+//        System.out.println(JsonConverter.jsonOfObject(stockVO));
+        System.out.println(JsonConverter.jsonOfObject(new StockNumber("sh5555")));
     }
 
     @Test

@@ -56,6 +56,9 @@ public interface GetStockService {
      */
     StockVO getLastestStock(String num, int numOfDays, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException;
 
+    //获取所有字段
+    StockVO getStock(String name, String start, String end) throws NotFoundException, BadInputException;
+
     /**
      * 获取一直股票单日价格的折线图数据,包括两条数据线,即时价格与累计均价
      *

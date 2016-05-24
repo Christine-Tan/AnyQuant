@@ -7,7 +7,7 @@ import model.analyse.MACDResult;
 import model.stock.StockVO;
 import org.junit.Test;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by kylin on 16/5/19.
@@ -22,7 +22,7 @@ public class TechnicalAnalysisTest {
     public void calculateRSI() throws Exception {
         StockVO stockVO = this.getStock.getStock("sh600015","2016-01-01","2016-04-13",
                 "open+close+high",null);
-        HashMap<String, Double> hashMap = this.strategy.calculateRSI(stockVO,6);
+        Map<String, Double> hashMap = this.strategy.calculateRSI(stockVO,6);
         System.out.println(hashMap.size());
     }
 
@@ -31,7 +31,7 @@ public class TechnicalAnalysisTest {
         StockVO stockVO = this.getStock.getStock("sh600000", "2015-01-01", "2016-04-13",
                 "open+close+high", null);
         MACDResult macdResult = this.strategy.calculateMACD(stockVO);
-        HashMap<String, Double> hashMap = macdResult.getBarValue();
+        Map<String, Double> hashMap = macdResult.getBarValue();
         System.out.println(hashMap.size());
     }
 
@@ -39,7 +39,7 @@ public class TechnicalAnalysisTest {
     public void calculateEMA() throws Exception {
         StockVO stockVO = getStock.getStock("sh600015", "2016-01-01", "2016-04-13",
                 "open+close+high", null);
-        HashMap<String, Double> hashMap = this.strategy.calculateEMA(stockVO, 6);
+        Map<String, Double> hashMap = this.strategy.calculateEMA(stockVO, 6);
         System.out.println(hashMap.size());
     }
 
