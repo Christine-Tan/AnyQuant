@@ -16,7 +16,6 @@ import util.time.DateCount;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,8 +50,7 @@ public class StockController {
         this.getStockService = BLFactory.getInstance().getGetStockService();
         pushData = new PushData(getStockService);
         //获取日期信息
-        Date today = new Date();
-        this.endDate = DateCount.dateToStr(today);
+        this.endDate = DateCount.getToday();
         this.startDate = DateCount.count(endDate, -300);
     }
 

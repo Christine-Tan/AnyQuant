@@ -6,7 +6,7 @@ import model.analyse.ComputableStock;
 import model.analyse.MACDResult;
 import util.exception.BadInputException;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by kylin on 16/4/9.
@@ -21,7 +21,7 @@ public interface TechnicalAnalysisStrategy {
      * @return
      * @throws BadInputException
      */
-    HashMap<String, Double> calculateRSI(ComputableStock computableStock, int step) throws BadInputException;
+    Map<String, Double> calculateRSI(ComputableStock computableStock, int step) throws BadInputException;
 
     /**
      * 计算一只股票以一定时间间隔为单位的MACD指数(Moving Average Convergence Divergence)
@@ -49,7 +49,7 @@ public interface TechnicalAnalysisStrategy {
      * @return EMA指数包(日期 数据)从入口结果的第二天开始
      * @throws BadInputException 输入参数不恰当异常
      */
-    HashMap<String, Double> calculateEMA(ComputableStock computableStock, int step) throws BadInputException;
+    Map<String, Double> calculateEMA(ComputableStock computableStock, int step) throws BadInputException;
 
 
     /**

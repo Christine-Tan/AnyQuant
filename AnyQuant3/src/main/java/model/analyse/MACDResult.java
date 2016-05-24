@@ -3,6 +3,7 @@ package model.analyse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kylin on 16/4/9.
@@ -17,15 +18,15 @@ import java.util.List;
 public class MACDResult implements ComputableStock {
 
     // a MACD line got from subtract the longer EMA2 from the shorter EMA1
-    HashMap<String,Double> dif;
+    Map<String,Double> dif;
 
     //a 9-day EMA of the MACD line
-    HashMap<String,Double> macd;
+    Map<String,Double> macd;
 
     //subtracting the 9-day EMA line from the MACD-line
-    HashMap<String,Double> barValue;
+    Map<String,Double> barValue;
 
-    public MACDResult(HashMap<String, Double> dif, HashMap<String, Double> EMA9) {
+    public MACDResult(Map<String, Double> dif, Map<String, Double> EMA9) {
         this.dif = dif;
         this.macd = EMA9;
         //subtracting the 9-day EMA line from the MACD-line
@@ -39,15 +40,15 @@ public class MACDResult implements ComputableStock {
         }
     }
 
-    public HashMap<String, Double> getDif() {
+    public Map<String, Double> getDif() {
         return dif;
     }
 
-    public HashMap<String, Double> getMacd() {
+    public Map<String, Double> getMacd() {
         return macd;
     }
 
-    public HashMap<String, Double> getBarValue() {
+    public Map<String, Double> getBarValue() {
         return barValue;
     }
 

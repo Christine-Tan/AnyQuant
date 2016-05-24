@@ -15,7 +15,7 @@ import java.util.Map;
 public class TechnicalAnalysis implements TechnicalAnalysisStrategy {
 
     @Override
-    public HashMap<String, Double> calculateRSI(ComputableStock computableStock, int step) throws BadInputException {
+    public Map<String, Double> calculateRSI(ComputableStock computableStock, int step) throws BadInputException {
         HashMap<String, Double> rsiResult = new HashMap<>();
 
         int numberOfDays = computableStock.numberOfDays();
@@ -49,8 +49,8 @@ public class TechnicalAnalysis implements TechnicalAnalysisStrategy {
 
     @Override
     public MACDResult calculateMACD(ComputableStock computableStock) throws BadInputException {
-        HashMap<String, Double> MACDLine = new HashMap<>();
-        HashMap<String, Double> EMA9 = new HashMap<>();
+        Map<String, Double> MACDLine = new HashMap<>();
+        Map<String, Double> EMA9 = new HashMap<>();
 
         int numberOfDays = computableStock.numberOfDays();
 
@@ -58,10 +58,10 @@ public class TechnicalAnalysis implements TechnicalAnalysisStrategy {
             throw new BadInputException("数据包所含天数过少,MACD结果无意义");
 
         //1. Calculate a 12 day EMA of closing prices
-        HashMap<String, Double> EMA12 = this.calculateEMA(computableStock, 12);
+        Map<String, Double> EMA12 = this.calculateEMA(computableStock, 12);
 
         //2. Calculate a 26 day EMA of closing prices
-        HashMap<String, Double> EMA26 = this.calculateEMA(computableStock, 26);
+        Map<String, Double> EMA26 = this.calculateEMA(computableStock, 26);
 
         //3. Subtract the longer EMA in (2) from the shorter EMA in (1)
         for (int i = 1; i <= numberOfDays; i++) {
@@ -81,7 +81,7 @@ public class TechnicalAnalysis implements TechnicalAnalysisStrategy {
     }
 
     @Override
-    public HashMap<String, Double> calculateEMA(ComputableStock computableStock, int step) throws BadInputException {
+    public Map<String, Double> calculateEMA(ComputableStock computableStock, int step) throws BadInputException {
         HashMap<String, Double> result = new HashMap<>();
         int numberOfDays = computableStock.numberOfDays();
 
