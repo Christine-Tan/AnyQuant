@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * Created by kylin on 16/3/4.
+ * All rights reserved.
  */
 public interface GetStockService {
 

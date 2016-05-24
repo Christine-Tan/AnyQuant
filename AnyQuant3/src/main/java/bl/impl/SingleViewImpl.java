@@ -29,8 +29,6 @@ import java.util.List;
  */
 public class SingleViewImpl implements SingleViewService {
 
-    private int lastIndex;
-
     private SingleStatisticBLService stasticbl;
 
     private GetStockService getStockService;
@@ -46,8 +44,6 @@ public class SingleViewImpl implements SingleViewService {
     @Override
     public BasicSingleVO getBasicSingleInfo(StockVO stockVO,String startDate,String endDate)
             throws BadInputException, NotFoundException {
-
-        lastIndex = stockVO.getAttributes().size() - 1;
 
         BasicSingleVO basicSingleVO = new BasicSingleVO();
         basicSingleVO.setStock_name(stockVO.getName());

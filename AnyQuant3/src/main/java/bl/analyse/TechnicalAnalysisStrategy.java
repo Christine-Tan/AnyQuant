@@ -3,6 +3,7 @@ package bl.analyse;
 
 import model.analyse.MACDResult;
 import model.analyse.ComputableStock;
+import model.common.LinearChartVO;
 import util.exception.BadInputException;
 
 import java.util.HashMap;
@@ -17,11 +18,10 @@ public interface TechnicalAnalysisStrategy {
      *
      * @param computableStock 可计算股票数据包接口
      * @param step            间隔天数
-     *
      * @return
      * @throws BadInputException
      */
-    HashMap<String,Double> calculateRSI(ComputableStock computableStock, int step) throws BadInputException;
+    HashMap<String, Double> calculateRSI(ComputableStock computableStock, int step) throws BadInputException;
 
     /**
      * 计算一只股票以一定时间间隔为单位的MACD指数(Moving Average Convergence Divergence)
@@ -52,4 +52,13 @@ public interface TechnicalAnalysisStrategy {
     HashMap<String, Double> calculateEMA(ComputableStock computableStock, int step) throws BadInputException;
 
 
+    /**
+     * 计算一只股票以一定时间间隔为单位的ARBR指数
+     *
+     * @param computableStock 可计算股票数据包接口
+     * @param step            间隔天数
+     * @return LinearChartVO 结果数据包
+     * @throws BadInputException 输入参数不恰当异常
+     */
+    LinearChartVO calculateARBR(ComputableStock computableStock, int step) throws BadInputException;
 }

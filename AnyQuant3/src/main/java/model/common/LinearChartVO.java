@@ -3,8 +3,8 @@ package model.common;
 import util.calculate.MySort;
 import util.enums.LinearChartType;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 折线图VO
@@ -62,7 +62,7 @@ public class LinearChartVO{
         double down = 1000;
 
         for(MyChartSeries series:this.chartSeries){
-            HashMap<String,Double> hashMap = series.getXyItem();
+            Map<String,Double> hashMap = series.getXyItem();
             double max = MySort.getMax(hashMap);
             double min = MySort.getMin(hashMap);
             if(max > up)

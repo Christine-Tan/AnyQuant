@@ -1,5 +1,7 @@
 package model.analyse;
 
+import java.util.List;
+
 /**
  * Created by kylin on 16/4/9.
  *
@@ -21,7 +23,15 @@ public interface ComputableStock {
     double priceAtDay(int dayIndex);
 
     /**
-     * 获取此日期的涨跌价格
+     * 根据日期的下标获取数据(open close high low)
+     *
+     * @param dayIndex 第几天
+     * @return 这天的股价
+     */
+    List<Double> pricelistAtDay(int dayIndex);
+
+    /**
+     * 获取此日期的涨跌价格(open - close)
      *
      * @param dayIndex 第几天
      * @return 涨跌价格

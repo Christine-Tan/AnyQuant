@@ -63,6 +63,11 @@ public class MACDResult implements ComputableStock {
     }
 
     @Override
+    public List<Double> pricelistAtDay(int dayIndex) {
+        return null;
+    }
+
+    @Override
     public double changeAtDay(int dayIndex) {
         return 0;
     }

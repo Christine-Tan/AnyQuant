@@ -33,7 +33,7 @@ public class JsonConverter {
         for (MyChartSeries myChartSeries : chartSeries) {
             JSONArray oneList = new JSONArray();
 
-            HashMap<String, Double> xyItems = myChartSeries.getXyItem();
+            Map<String, Double> xyItems = myChartSeries.getXyItem();
 
             List<Map.Entry<String, Double>> list = new ArrayList<>(xyItems.entrySet());
             Collections.sort(list, (Map.Entry<String, Double> o1, Map.Entry<String, Double> o2)

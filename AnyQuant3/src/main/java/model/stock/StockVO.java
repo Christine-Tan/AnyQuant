@@ -128,7 +128,7 @@ public class StockVO implements ComputableStock {
     }
 
     public List<StockAttribute> getAttributes(String start, String end) throws BadInputException {
-        if(start.compareTo(this.startDate) < 0 || end.compareTo(this.endDate) > 0){
+        if (start.compareTo(this.startDate) < 0 || end.compareTo(this.endDate) > 0) {
             throw new BadInputException("日期返回超出VO内部范围");
         }
 
@@ -151,9 +151,22 @@ public class StockVO implements ComputableStock {
 
     @Override
     public double priceAtDay(int dayIndex) {
+        return Double.parseDouble(this.attributes.get(dayIndex).getAttribute().get("close"));
+    }
+
+    @Override
+    public List<Double> pricelistAtDay(int dayIndex) {
         this.sortAttr();
-        String price = this.attributes.get(dayIndex).getAttribute().get("close");
-        return Double.parseDouble(price);
+        double open = Double.parseDouble(this.attributes.get(dayIndex).getAttribute().get("open"));
+        double close = Double.parseDouble(this.attributes.get(dayIndex).getAttribute().get("close"));
+        double high = Double.parseDouble(this.attributes.get(dayIndex).getAttribute().get("high"));
+        double low = Double.parseDouble(this.attributes.get(dayIndex).getAttribute().get("low"));
+        List<Double> result = new ArrayList<>();
+        result.add(open);
+        result.add(close);
+        result.add(high);
+        result.add(low);
+        return result;
     }
 
     @Override

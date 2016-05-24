@@ -4,6 +4,7 @@ import bl.service.GetStockService;
 import bl.service.IndustryViewService;
 import data.dataservice.StockDataService;
 import data.factory.DataFactory;
+import model.analyse.RiseAndFallVO;
 import model.barchart.VolumeChartVO;
 import model.barchart.VolumeVO;
 import model.common.LinearChartVO;
@@ -75,6 +76,11 @@ public class IndustryViewImpl implements IndustryViewService {
             Industry industry = new Industry(industryName, stockVOsInIndustry);
             industryList.add(industry);
         }
+        this.sortList();
+    }
+
+    private void sortList() {
+
     }
 
     @Override
@@ -320,6 +326,11 @@ public class IndustryViewImpl implements IndustryViewService {
             }
         }
         throw new NotFoundException("您输入的行业不存在!");
+    }
+
+    @Override
+    public List<RiseAndFallVO> getRiseAndFallList() {
+        return null;
     }
 
 

@@ -13,7 +13,7 @@ public class MySort {
      * @param hash
      * @return
      */
-    public static List<MyHashItem> sortHashmapByKey(HashMap<String, Double> hash){
+    public static List<MyHashItem> sortHashmapByKey(Map<String, Double> hash){
         List<MyHashItem> items = new ArrayList<>();
 
         //将map.entrySet()转换成list
@@ -31,7 +31,7 @@ public class MySort {
         return items;
     }
 
-    public static double getMax(HashMap<String, Double> hash){
+    public static double getMax(Map<String, Double> hash){
         double max = -10000;
         for(String key:hash.keySet()){
             if(hash.get(key) > max)
@@ -40,7 +40,7 @@ public class MySort {
         return max;
     }
 
-    public static double getMin(HashMap<String, Double> hash){
+    public static double getMin(Map<String, Double> hash){
         double min = 10000;
         for(String key:hash.keySet()){
             if(hash.get(key) < min)

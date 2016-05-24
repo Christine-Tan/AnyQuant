@@ -1,12 +1,15 @@
 package bl.service;
 
 
+import model.analyse.RiseAndFallVO;
 import model.barchart.VolumeVO;
 import model.common.LinearChartVO;
 import model.industry.IndustryVO;
 import util.enums.IndustryPeriodEnum;
 import util.exception.BadInputException;
 import util.exception.NotFoundException;
+
+import java.util.List;
 
 /**
  * Created by kylin on 16/3/31.
@@ -21,7 +24,6 @@ public interface IndustryViewService {
      * @return 行业基本数据VO包
      */
     IndustryVO getBasicIndustryInfo(String industryName, IndustryPeriodEnum period) throws NotFoundException;
-
 
     /**
      * 获取一个行业一段时间内的价格统计信息(折线图)
@@ -52,4 +54,10 @@ public interface IndustryViewService {
      */
     VolumeVO getIndustryVolume(String industryName, IndustryPeriodEnum period) throws NotFoundException;
 
+    /**
+     * 获取所有行业涨跌幅排行榜
+     *
+     * @return 按照涨到跌排序的行业
+     */
+    List<RiseAndFallVO> getRiseAndFallList();
 }
