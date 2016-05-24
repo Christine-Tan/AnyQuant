@@ -1,13 +1,10 @@
 package bl.analyse;
 
+import model.analyse.ARBRresult;
 import model.analyse.ComputableStock;
 import model.analyse.MACDResult;
-import model.common.LinearChartVO;
-import model.common.MyChartSeries;
-import util.enums.LinearChartType;
 import util.exception.BadInputException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,7 +132,7 @@ public class TechnicalAnalysis implements TechnicalAnalysisStrategy {
     }
 
     @Override
-    public LinearChartVO calculateARBR(ComputableStock computableStock, int step) throws BadInputException {
+    public ARBRresult calculateARBR(ComputableStock computableStock, int step) throws BadInputException {
 
         Map<String, Double> ar = new HashMap<>();
         Map<String, Double> br = new HashMap<>();
@@ -175,13 +172,7 @@ public class TechnicalAnalysis implements TechnicalAnalysisStrategy {
             br.put(todayDate, brValue);
         }
 
-        MyChartSeries series1 = new MyChartSeries("AR指标", ar);
-        MyChartSeries series2 = new MyChartSeries("BR指标", br);
+        return new ARBRresult(ar,br);
 
-        List<MyChartSeries> myChartSeries = new ArrayList<>();
-        myChartSeries.add(series1);
-        myChartSeries.add(series2);
-
-        return new LinearChartVO(myChartSeries, LinearChartType.RSI);
     }
 }

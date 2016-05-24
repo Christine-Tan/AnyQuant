@@ -21,10 +21,10 @@ public class IndustryViewServiceTest {
 
     @Test
     public void getBasicIndustryInfo() throws Exception {
-        String industryName = getStockService.getIndustryName(number);
         IndustryPeriodEnum industryPeriod = IndustryPeriodEnum.SECOND;
 
-        IndustryVO industryVO = industryViewService.getBasicIndustryInfo(industryName,industryPeriod);
+        IndustryVO industryVO = industryViewService.getBasicIndustryInfo("酒业",industryPeriod);
+        System.out.println(industryVO.getIndustryName());
     }
 
     @Test

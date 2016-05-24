@@ -1,9 +1,9 @@
 package bl.analyse;
 
 
-import model.analyse.MACDResult;
+import model.analyse.ARBRresult;
 import model.analyse.ComputableStock;
-import model.common.LinearChartVO;
+import model.analyse.MACDResult;
 import util.exception.BadInputException;
 
 import java.util.HashMap;
@@ -60,5 +60,5 @@ public interface TechnicalAnalysisStrategy {
      * @return LinearChartVO 结果数据包
      * @throws BadInputException 输入参数不恰当异常
      */
-    LinearChartVO calculateARBR(ComputableStock computableStock, int step) throws BadInputException;
+    ARBRresult calculateARBR(ComputableStock computableStock, int step) throws BadInputException;
 }

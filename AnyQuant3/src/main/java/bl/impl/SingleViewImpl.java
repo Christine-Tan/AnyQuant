@@ -5,6 +5,7 @@ import bl.service.SingleViewService;
 import bl.analyse.SingleStatisticBLService;
 import bl.analyse.TechnicalAnalysis;
 import bl.analyse.TechnicalAnalysisStrategy;
+import model.analyse.ARBRresult;
 import model.stock.StockAttribute;
 import model.stock.StockVO;
 import util.calculate.LinearRegression;
@@ -23,6 +24,7 @@ import model.analyse.MACDResult;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by JiachenWang on 2016/3/23.
@@ -178,6 +180,23 @@ public class SingleViewImpl implements SingleViewService {
 
         return new LinearChartVO(myChartSeries, LinearChartType.MACD);
 
+    }
+
+    @Override
+    public LinearChartVO getStockARBR(StockVO stockVO) throws BadInputException, NotFoundException {
+        ARBRresult arbRresult = strategy.calculateARBR(stockVO,26);
+
+        Map<String, Double> ar = arbRresult.getAr();
+        Map<String, Double> br = arbRresult.getBr();
+
+        MyChartSeries series1 = new MyChartSeries("AR指标", ar);
+        MyChartSeries series2 = new MyChartSeries("BR指标", br);
+
+        List<MyChartSeries> myChartSeries = new ArrayList<>();
+        myChartSeries.add(series1);
+        myChartSeries.add(series2);
+
+        return new LinearChartVO(myChartSeries, LinearChartType.RSI);
     }
 
     private String getPredict(String variance_three, StockVO stock_macd) throws BadInputException {

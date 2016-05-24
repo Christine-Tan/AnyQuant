@@ -8,24 +8,26 @@ import util.calculate.NumberFormater;
  */
 public class RiseAndFallVO implements Comparable{
 
+    /**
+     * 股票或者行业名称
+     */
     private String name;
 
-    private double rise;
-
+    /**
+     * 用于显示在界面上的涨跌幅,格式: xx.xx%
+     */
     private String riseStr;
+
+    private double rise;
 
     public RiseAndFallVO(String name, double rise) {
         this.name = name;
         this.rise = rise;
-        riseStr = NumberFormater.formatPercent(rise);
+        this.riseStr = NumberFormater.formatPercent(rise);
     }
 
     public String getName() {
         return name;
-    }
-
-    public double getRise() {
-        return rise;
     }
 
     public String getRiseStr() {
@@ -35,9 +37,9 @@ public class RiseAndFallVO implements Comparable{
     @Override
     public int compareTo(Object o) {
         RiseAndFallVO another = (RiseAndFallVO) o;
-        if(this.rise < another.getRise())
+        if(this.rise < another.rise)
             return 1;
-        else if(this.rise == another.getRise())
+        else if(this.rise == another.rise)
             return 0;
         else
             return -1;

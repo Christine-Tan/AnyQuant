@@ -3,6 +3,7 @@ package controller;
 import bl.factory.BLFactory;
 import bl.service.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import model.analyse.RiseAndFallVO;
 import model.barchart.MixSingleVolumeVO;
 import model.barchart.SingleVolumeVO;
 import model.barchart.VolumeVO;
@@ -173,6 +174,10 @@ public class MainController {
                 (stockVO.getName(), stockVO.getNumber(), PeriodEnum.DAY, stockVO.getStartDate(), stockVO.getEndDate());
         String mixSingleVolumeLine = JsonConverter.jsonOfVolumeVO(mixSingleVolumeVO);
         model.put("mixSingleVolumeLine", mixSingleVolumeLine);
+
+        //个股涨跌幅排行
+        List<RiseAndFallVO> stockRiseList = getStockService.getRiseAndFallList();
+        model.put("stockRiseList", stockRiseList);
     }
 
     /**
@@ -202,6 +207,10 @@ public class MainController {
         model.put("industryPriceLine", industryPriceLine);
         model.put("comparePriceLine", comparePriceLine);
         model.put("industryVolume", volume);
+
+        //行业股票涨跌幅排行
+        List<RiseAndFallVO> industryRiseList = industryViewService.getRiseAndFallList();
+        model.put("industryRiseList", industryRiseList);
     }
 
 
@@ -221,30 +230,35 @@ public class MainController {
         BasicSingleVO basicSingleVO = singleViewService.getBasicSingleInfo(stockVO, startDate, endDate);
         model.put("basicSingleVO", basicSingleVO);
 
-        //三个数据分析的折线图
+        //4个数据分析的折线图rsi,ema,macd,arbr
         LinearChartVO rsiData = singleViewService.getStockRSI(stockVO);
         LinearChartVO emaData = singleViewService.getStockEMA(stockVO);
         LinearChartVO macdData = singleViewService.getStockMACD(stockVO);
+        LinearChartVO arbrData = singleViewService.getStockARBR(stockVO);
 
         List<String> rsiLine = JsonConverter.jsonOfLinearChartVO(rsiData);
         List<String> emaLine = JsonConverter.jsonOfLinearChartVO(emaData);
         List<String> macdLine = JsonConverter.jsonOfLinearChartVO(macdData);
+        List<String> arbrLine = JsonConverter.jsonOfLinearChartVO(arbrData);
 
         model.put("rsiLine", rsiLine);
         model.put("emaLine", emaLine);
         model.put("macdLine", macdLine);
+        model.put("arbrLine", arbrLine);
 
-//        //某时间段内单只股票交易金额对比图(饼图)
+        //某时间段内单只股票交易金额对比图(饼图)
         String name = stockVO.getName();
         String number = stockVO.getNumber();
         PieChartVO amountVOPie = pieChartService.getPieAmountVO(name, number, DateCount.count(endDate, -14), endDate);
         List<String> amountPie = JsonConverter.convertPieVO(amountVOPie);
         model.put("amountPie", amountPie);
-//
-//        //某时间段内单只股票交易量对比图(饼图)
+
+        //某时间段内单只股票交易量对比图(饼图)
         PieChartVO volumeVOPie = pieChartService.getPieVolumeVO(name, number, DateCount.count(endDate, -14), endDate);
         List<String> volumePie = JsonConverter.convertPieVO(volumeVOPie);
         model.put("volumePie", volumePie);
+
+        //TODO arima模型结果
     }
 
 }

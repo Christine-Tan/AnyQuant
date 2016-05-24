@@ -42,4 +42,12 @@ public interface SingleViewService {
      */
     LinearChartVO getStockMACD(StockVO stockVO)throws BadInputException, NotFoundException;
 
+
+    /**
+     * 获得ARBR数值折线图
+     * @return
+     * @throws BadInputException
+     * @throws NotFoundException
+     */
+    LinearChartVO getStockARBR(StockVO stockVO)throws BadInputException, NotFoundException;
 }

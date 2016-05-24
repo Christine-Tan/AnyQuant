@@ -2,8 +2,8 @@ package bl.analyse;
 
 import bl.impl.GetStockStub;
 import bl.service.GetStockService;
+import model.analyse.ARBRresult;
 import model.analyse.MACDResult;
-import model.common.LinearChartVO;
 import model.stock.StockVO;
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class TechnicalAnalysisTest {
 
     @Test
     public void calculateEMA() throws Exception {
-        StockVO stockVO = getStock.getStock("sh600015", "2015-01-01", "2016-04-13",
+        StockVO stockVO = getStock.getStock("sh600015", "2016-01-01", "2016-04-13",
                 "open+close+high", null);
         HashMap<String, Double> hashMap = this.strategy.calculateEMA(stockVO, 6);
         System.out.println(hashMap.size());
@@ -45,9 +45,9 @@ public class TechnicalAnalysisTest {
 
     @Test
     public void calculateARBR() throws Exception {
-        StockVO stockVO = getStock.getStock("sh600015", "2016-01-01", "2016-05-13",
+        StockVO stockVO = getStock.getStock("sh600015", "2016-04-01", "2016-05-31",
                 "open+close+high+low", null);
-        LinearChartVO chartVO = this.strategy.calculateARBR(stockVO, 26);
-        System.out.println(chartVO.getChartSeries().get(0).getXyItem().size());
+        ARBRresult chartVO = this.strategy.calculateARBR(stockVO, 26);
+        System.out.println(chartVO.getAr().size());
     }
 }
