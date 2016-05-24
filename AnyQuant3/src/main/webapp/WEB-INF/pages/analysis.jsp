@@ -45,6 +45,7 @@
                 <%--<div class="form-group">--%>
                 <%--<div class="row-inline" class="thumbnail" style="border: none">--%>
                 <input type="text" id="search" name="number" class="form-control" placeholder="请输入股票代码"/>
+                <input type="text" id="viewID" name="view" style="display:none;"/>
                 <input type="submit" value="搜索">
                 <%--</div>--%>
                 <%--</div>--%>
@@ -54,6 +55,7 @@
             <script type="text/javascript">
                 var text = <%=number%>;
                 document.getElementById("search").value=text.number;
+                document.getElementById("viewID").value="analysis";
             </script>
             <!--在此添加横向导航-->
 
@@ -65,7 +67,7 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a href="single.search"><i class="fa fa-dashboard"></i> SingleStock</a>
+                    <a href="single.nosearch"><i class="fa fa-dashboard"></i> SingleStock</a>
                 </li>
                 <li>
                     <a href="analysis.industry"><i class="fa fa-desktop"></i> Industry</a>

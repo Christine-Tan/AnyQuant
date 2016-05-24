@@ -44,10 +44,11 @@
         </div>
 
         <ul class="nav navbar-top-links navbar">
-            <form class="form-inline text-center" style="padding-top: 20px" action="single.stock" method="get">
+            <form class="form-inline text-center" style="padding-top: 20px" action="single.search" method="get">
                 <%--<div class="form-group">--%>
                     <%--<div class="row-inline" class="thumbnail" style="border: none">--%>
                         <input type="text" id="search" name="number" class="form-control" placeholder="请输入股票代码"/>
+                        <input type="text" id="viewID" name="view" style="display:none;"/>
                         <input type="submit" value="搜索">
                     <%--</div>--%>
                 <%--</div>--%>
@@ -57,6 +58,7 @@
             <script type="text/javascript">
                 var text = <%=number%>;
                 document.getElementById("search").value=text.number;
+                document.getElementById("viewID").value="singleStock";
             </script>
 
             <%--<script>window.onload=initSearch()</script>--%>
@@ -72,7 +74,7 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a class="active-menu" href="single.search" ><i class="fa fa-dashboard"></i> SingleStock</a>
+                    <a class="active-menu" href="single.stock?isSearch=10" ><i class="fa fa-dashboard"></i> SingleStock</a>
                 </li>
                 <li>
                     <a href="analysis.industry" ><i class="fa fa-desktop"></i> Industry</a>
