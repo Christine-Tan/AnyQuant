@@ -41,7 +41,7 @@
         </div>
 
         <ul class="nav navbar-top-links navbar-right">
-            <form class="form-inline text-center" style="padding-top: 20px" action="single.analysis" method="get">
+            <form class="form-inline text-center" style="padding-top: 20px" action="single.search" method="get">
                 <%--<div class="form-group">--%>
                 <%--<div class="row-inline" class="thumbnail" style="border: none">--%>
                 <input type="text" id="search" name="number" class="form-control" placeholder="请输入股票代码"/>
@@ -67,7 +67,7 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a href="single.nosearch"><i class="fa fa-dashboard"></i> SingleStock</a>
+                    <a href="single.stock?isSearch=10"><i class="fa fa-dashboard"></i> SingleStock</a>
                 </li>
                 <li>
                     <a href="analysis.industry"><i class="fa fa-desktop"></i> Industry</a>

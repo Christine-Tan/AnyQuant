@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by kylin on 16/5/12.
+ * All rights Reserved.
  */
 @Controller
 public class MainController {
@@ -15,7 +16,7 @@ public class MainController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
-        return "FrontPage";
+        return "frontPage";
     }
 
 }

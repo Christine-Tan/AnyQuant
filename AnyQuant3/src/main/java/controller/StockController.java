@@ -39,11 +39,6 @@ public class StockController {
      */
     private PushData pushData;
 
-    /**
-     * 暂存主界面用户输入的股票
-     */
-    private static String stockNumber;
-
     private String startDate;
     private String endDate;
 
