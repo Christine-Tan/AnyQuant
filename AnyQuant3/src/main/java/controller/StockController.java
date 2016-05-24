@@ -58,7 +58,6 @@ public class StockController {
 
     /**
      * 界面传入参数获取股票信息的主方法
-     * 主界面的大输入框
      *
      * @return 一日分时图数据与股票历史数据
      */
@@ -66,13 +65,14 @@ public class StockController {
     public ModelAndView getStock(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
         //从用户的输入取参数
-        String number = (String) httpServletRequest.getParameter("number");
-        //将新的参数加入session
-        HttpSession session = httpServletRequest.getSession();
-        //封装成json格式
+        String number = httpServletRequest.getParameter("number");
+        String view = httpServletRequest.getParameter("view");
+
+        //将新的参数加入session,封装成json格式
         StockNumber stockNumber= new StockNumber(number);
         String str = JsonConverter.jsonOfObject(stockNumber);
         //If an object of the same name is already bound to the session,the object is replaced.
+        HttpSession session = httpServletRequest.getSession();
         session.setAttribute("number",str);
 
         Map<String, Object> model = new HashMap<>();
@@ -82,13 +82,12 @@ public class StockController {
         //单只股票基本信息(K线图,成交量柱状图)
         pushData.pushStockModel(model,stockVO);
         model.put("number",number);
-        return new ModelAndView("singleStock", model);
+        return new ModelAndView(view, model);
     }
 
-    @RequestMapping(value = "*.nosearch", method = {RequestMethod.GET})
+    @RequestMapping(value = "*.stock", method = {RequestMethod.GET})
     public ModelAndView notChangeStock(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
-
         //直接从session取参数
         HttpSession session = httpServletRequest.getSession();
         String number = (String) session.getAttribute("number");
