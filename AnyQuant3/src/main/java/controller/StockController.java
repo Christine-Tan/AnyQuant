@@ -66,7 +66,7 @@ public class StockController {
     public ModelAndView getStock(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
         //从用户的输入取参数
-        String number = (String) httpServletRequest.getAttribute("number");
+        String number = (String) httpServletRequest.getParameter("number");
         //将新的参数加入session
         HttpSession session = httpServletRequest.getSession();
         //封装成json格式
@@ -107,6 +107,7 @@ public class StockController {
     //返回StockVO历史数据
     public ModelAndView getHistory(HttpServletRequest httpServletRequest)
             throws NotFoundException, IOException, BadInputException {
+
         HttpSession session = httpServletRequest.getSession();
         String number = (String) session.getAttribute("number");
 
@@ -122,6 +123,7 @@ public class StockController {
     public ModelAndView getAnalysis(HttpServletRequest httpServletRequest)
 
             throws NotFoundException, BadInputException, JsonProcessingException {
+
         HttpSession session = httpServletRequest.getSession();
         String number = (String) session.getAttribute("number");
 
