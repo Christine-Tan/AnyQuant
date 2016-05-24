@@ -14,6 +14,7 @@ import util.exception.NotFoundException;
 import util.time.DateCount;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -65,6 +66,10 @@ public class StockController {
             throws NotFoundException, IOException, BadInputException {
         //获取URL参数
         String number = httpServletRequest.getParameter("number");
+
+        HttpSession session = httpServletRequest.getSession();
+        session.setAttribute("number",number);
+
         StockVO stockVO = getStockService.getStock(number, startDate, endDate);
 
         Map<String, Object> model = new HashMap<>();
