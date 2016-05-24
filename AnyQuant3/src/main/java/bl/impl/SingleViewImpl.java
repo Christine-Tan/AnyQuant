@@ -56,9 +56,10 @@ public class SingleViewImpl implements SingleViewService {
                 stockVO.getNumber(), DateCount.count(endDate, -150),
                 endDate, SomeConstant.field.all, new ArrayList<>());
 
-        basicSingleVO.setConclusion(
-                getPredict(
-                stasticbl.getAllVarianceOfPrice(startDate, endDate), stock_macd));
+        //TODO，预测部份，BASICINFO要改
+//        basicSingleVO.setConclusion(
+//                getPredict(
+//                stasticbl.getAllVarianceOfPrice(startDate, endDate), stock_macd));
 
         //计算各种指标
 
@@ -197,70 +198,6 @@ public class SingleViewImpl implements SingleViewService {
         myChartSeries.add(series2);
 
         return new LinearChartVO(myChartSeries, LinearChartType.RSI);
-    }
-
-    private String getPredict(String variance_three, StockVO stock_macd) throws BadInputException {
-        String result = "通过对" + stock_macd.getName() + "历史数据的分析，可以得到一些结论。";
-
-        result += this.getMACDInfo(stock_macd);
-
-        double variance = stasticbl.getVarianceOfPrice(stock_macd);
-        String[] list = variance_three.split("-");
-        double v1 = Double.parseDouble(list[0]);
-        double v2 = Double.parseDouble(list[1]);
-        double v3 = Double.parseDouble(list[2]);
-        result += "\n" + "        " + "结合半个月的数据，";
-        if (variance <= v1)
-            result += "从稳定程度看，该股票特别稳定，稳定程度超过系统中75%的股票。";
-        else if (variance > v1 && variance <= v2)
-            result += "从稳定程度看，该股票具有一定的稳定性，稳定程度超过系统中50%的股票。";
-        else if (variance > v2 && variance <= v3)
-            result += "从稳定程度看，该股票不是特别稳定，稳定程度仅仅超过系统中25%的股票。";
-        else if (variance > v3)
-            result += "从稳定程度看，该股票波动很大，具有一定的风险性。";
-
-        return result;
-    }
-
-    private String getMACDInfo(StockVO stock) throws BadInputException {
-        String result = "";
-        MACDResult macdResult = strategy.calculateMACD(stock);
-        List<MyHashItem> list = MySort.sortHashmapByKey(macdResult.getMacd());
-        double[] arg1 = new double[list.size()];
-        double[] arg2 = new double[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            arg1[i] = i + 1;
-            arg2[2] = (double) list.get(i).getValue();
-        }
-        double gradient = LinearRegression.calculateLR_b(arg1, arg2, list.size());
-
-        double dif_avg = 0;
-        for (double value : macdResult.getDif().values())
-            dif_avg += value;
-        dif_avg = dif_avg / macdResult.getDif().size();
-
-        double macd_avg = 0;
-        for (double value : macdResult.getMacd().values())
-            macd_avg += value;
-        macd_avg = macd_avg / macdResult.getMacd().size();
-
-        if (macd_avg * dif_avg <= 0)
-            return "";
-
-//        System.out.println("fff" + gradient);
-        result += "\n" + "        " + "结合近半年的数据，从MACD指数来看，";
-        if (macd_avg > 0 && gradient > 0)
-            result += "该股票行情行情处于多头行情中，可以买入开仓或多头持仓。";
-        else if (macd_avg < 0 && gradient < 0)
-            result += "该股票行情处于空头行情中，可以卖出开仓或观望。";
-        else if (macd_avg > 0 && gradient < 0)
-            result += "该股票行情处于下跌阶段，可以卖出开仓和观望。";
-        else if (macd_avg < 0 && gradient > 0)
-            result += "该股票行情即将上涨，可以买入开仓或多头持仓。";
-        else if (gradient == 0)
-            result += "该股票行情走势稳定。";
-
-        return result;
     }
 
 }

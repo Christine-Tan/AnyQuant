@@ -105,6 +105,26 @@ public class GetStockImpl implements GetStockService {
         return vo;
     }
 
+    @Override
+    public StockVO getLastestStock(String num, int numOfDays, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException {
+        //从数据层调取数据包
+        StockPO po = this.getAndCachePO(num);
+        //寻找有效区间
+        String end = DateCount.dateToStr(new Date());
+        String start = end;
+        int count = 0;
+        while(count!=numOfDays){
+            start = DateCount.count(start, -1);
+            if (po.hasInfo(start))
+                ++count;
+        }
+        //变为VO
+        StockVO vo = new StockVO(po, start, end, fields);
+        //过滤数据域
+        vo = filter(vo, ranges);
+        return vo;
+    }
+
     /**
      * 先在缓存中找某只股票的PO,没有再从数据层获得
      *

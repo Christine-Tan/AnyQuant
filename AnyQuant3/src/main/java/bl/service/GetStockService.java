@@ -38,13 +38,23 @@ public interface GetStockService {
     /**
      * 返回指定股票代码的指定时间字段的信息
      *
-     * @param name   股票代码
+     * @param num   股票代码
      * @param start  起点日期
      * @param end    终点日期
      * @param fields 股票信息字段
      * @return 股票代码的指定时间字段的信息
      */
-    StockVO getStock(String name, String start, String end, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException;
+    StockVO getStock(String num, String start, String end, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException;
+
+    /**
+     * 返回指定股票代码的指定最近天数的字段的信息
+     *
+     * @param num   股票代码
+     * @param numOfDays  天数
+     * @param fields 股票信息字段
+     * @return 股票代码的指定时间字段的信息
+     */
+    StockVO getLastestStock(String num, int numOfDays, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException;
 
     /**
      * 获取一直股票单日价格的折线图数据,包括两条数据线,即时价格与累计均价

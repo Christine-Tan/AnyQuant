@@ -4,6 +4,7 @@ import bl.service.GetStockService;
 import model.analyse.RiseAndFallVO;
 import model.common.LinearChartVO;
 import model.common.MyChartSeries;
+import model.stock.StockVO;
 import org.junit.Test;
 import util.constant.StockConstant;
 import util.exception.NotFoundException;
@@ -38,6 +39,12 @@ public class GetStockImplTest {
     @Test
     public void getStock() throws Exception {
         getStockService.getStock("sh600519","2016-01-01","2016-05-05", StockConstant.AllFields,null);
+    }
+
+    @Test
+    public void getLastestStock() throws Exception {
+        StockVO vo = getStockService.getLastestStock("sh600519",15, StockConstant.AllFields,null);
+        System.out.println(vo.numberOfDays());
     }
 
     @Test

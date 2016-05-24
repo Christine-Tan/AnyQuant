@@ -40,9 +40,15 @@ public class GetStockStub implements GetStockService {
     }
 
     @Override
-    public StockVO getStock(String name, String start, String end, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException {
-        StockPO po = stockDataService.getStock(name);
+    public StockVO getStock(String num, String start, String end, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException {
+        StockPO po = stockDataService.getStock(num);
         return new StockVO(po,start,end,fields);
+    }
+
+    @Override
+    public StockVO getLastestStock(String num, int numOfDays, String fields, List<ConditionSelect> ranges) throws NotFoundException, BadInputException {
+        StockPO po = stockDataService.getStock(num);
+        return new StockVO(po, "2016-04-22", "2016-05-22",fields);
     }
 
     @Override

@@ -47,6 +47,14 @@ public class StockPO {
         return infomation;
     }
 
+    public boolean hasInfo(String date){
+        this.infomation.get(date);
+        if (this.infomation.get(date)==null)
+            return false;
+        else
+            return true;
+    }
+
     @Override
     public String toString() {
         String result = "";
