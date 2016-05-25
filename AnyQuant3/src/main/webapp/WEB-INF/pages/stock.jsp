@@ -43,9 +43,6 @@
 
         <script type="text/javascript">
 
-            var top;
-            var down;
-
             $(document).ready(function () {
 
                 $('.single_label .tabs .tab,.on').css('cursor', 'pointer');
@@ -57,10 +54,8 @@
 
                     var type = $(this).attr('id');
                     if(type=='tab1_kline'){
-                        top=createKLine("single_k_line",<%=request.getAttribute("kLine")%>);
-                        down = createBarChart('single_bar',<%=request.getAttribute("singleVolumeLine")%>, '成交量柱状图', ['volume']);
-                        top.connect(down);
-                        down.connect(top);
+                        createKLine("single_k_line",<%=request.getAttribute("kLine")%>);
+                        createBarChart('single_bar',<%=request.getAttribute("singleVolumeLine")%>, '成交量柱状图', ['volume']);
                     }else if(type == "tab1_line"){
                         var dailyLineData = [];
                         var dailyLegend = [];
@@ -72,10 +67,8 @@
                         <%}%>
                         dailyLegend.push('line1');
                         dailyLegend.push('line2');
-                        top = createLineChart('single_k_line',dailyLineData,'股价分时图',dailyLegend);
-                        down = createBarChart('single_bar',<%=request.getAttribute("volumeLine")%>, '成交量分时柱状图', ['volume'])
-                        top.connect(down);
-                        down.connect(top);
+                        createLineChart('single_k_line',dailyLineData,'股价分时图',dailyLegend);
+                        createBarChart('single_bar',<%=request.getAttribute("volumeLine")%>, '成交量分时柱状图', ['volume']);
                     }
 
                 });
@@ -89,12 +82,8 @@
 
 
         <script>
-            var top;
-            var down;
-            top=createKLine("single_k_line",<%=request.getAttribute("kLine")%>);
-            down = createBarChart('single_bar',<%=request.getAttribute("singleVolumeLine")%>, '成交量柱状图', ['volume']);
-            top.connect(down);
-            down.connect(top);
+            createKLine("single_k_line",<%=request.getAttribute("kLine")%>);
+            createBarChart('single_bar',<%=request.getAttribute("singleVolumeLine")%>, '成交量柱状图', ['volume']);
         </script>
 
 

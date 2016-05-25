@@ -23,6 +23,10 @@
     <!-- Google Fonts-->
     <link href='http://fonts.useso.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="/assets/js/Lightweight-Chart/cssCharts.css">
+    <link rel="stylesheet" href="/css/stock.css"/>
+    <script src="/js/jquery-2.2.3.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+    <script src="/js/stock.js"></script>
 </head>
 
 <body>
@@ -35,7 +39,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><strong>Marvel</strong></a>
+            <a class="navbar-brand" href="single.stock"><strong>Marvel</strong></a>
 
             <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
         </div>

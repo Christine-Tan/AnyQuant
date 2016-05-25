@@ -23,6 +23,10 @@
     <!-- Google Fonts-->
     <link href='http://fonts.useso.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="/assets/js/Lightweight-Chart/cssCharts.css">
+    <link rel="stylesheet" href="/css/stock.css"/>
+    <script src="/js/jquery-2.2.3.min.js"></script>
+    <script src="/js/echarts.min.js"></script>
+    <script src="/js/stock.js"></script>
 </head>
 
 <body>
@@ -35,27 +39,29 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html"><strong>Marvel</strong></a>
+            <a class="navbar-brand" href="single.stock"><strong>Marvel</strong></a>
 
             <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
         </div>
 
-        <ul class="nav navbar-top-links navbar-right">
-            <form class="form-inline text-center" style="padding-top: 20px" action="single.search" method="get">
-                <%--<div class="form-group">--%>
-                <%--<div class="row-inline" class="thumbnail" style="border: none">--%>
-                <input type="text" id="search" name="number" class="form-control" placeholder="请输入股票代码"/>
-                <input type="text" id="viewID" name="view" style="display:none;"/>
-                <input type="submit" value="搜索">
-                <%--</div>--%>
-                <%--</div>--%>
+        <ul class="nav navbar-top-links">
+            <form class="form-inline text-left" style="padding-top: 15px" action="single.search" method="get">
+                <div class="form-group">
+                    <div class="row-inline" class="thumbnail" style="border: none">
+                        <input type="text" id="search" name="number" class="form-control" placeholder="请输入股票代码"
+                               style="margin-left:40px;"/>
+                        <input type="text" id="viewID" name="view" style="display:none;"/>
+                        <input type="submit" value="搜索" style="margin-left:30px;"/>
+                    </div>
+                </div>
             </form>
-            <%String number = (String)request.getSession().getAttribute("number");
+            <%
+                String number = (String) request.getSession().getAttribute("number");
             %>
             <script type="text/javascript">
                 var text = <%=number%>;
-                document.getElementById("search").value=text.number;
-                document.getElementById("viewID").value="analysis";
+                document.getElementById("search").value = text.number;
+                document.getElementById("viewID").value = "analysis";
             </script>
             <!--在此添加横向导航-->
 
@@ -67,7 +73,7 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a href="single.stock?isSearch=10"><i class="fa fa-dashboard"></i> SingleStock</a>
+                    <a href="single.stock"><i class="fa fa-dashboard"></i> SingleStock</a>
                 </li>
                 <li>
                     <a href="analysis.industry"><i class="fa fa-desktop"></i> Industry</a>
@@ -76,7 +82,7 @@
                     <a class="active-menu" href="single.analysis"><i class="fa fa-bar-chart-o"></i> Analysis</a>
                 </li>
                 <%--<li>--%>
-                    <%--<a href="all.markets"><i class="fa fa-qrcode"></i> Markets</a>--%>
+                <%--<a href="all.markets"><i class="fa fa-qrcode"></i> Markets</a>--%>
                 <%--</li>--%>
 
                 <li>
@@ -120,10 +126,6 @@
                 </div>
 
             </div><!--/.row-->
-
-
-
-
 
 
             <div class="row">
