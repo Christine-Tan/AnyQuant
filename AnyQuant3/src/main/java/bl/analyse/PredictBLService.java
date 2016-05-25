@@ -26,4 +26,14 @@ public interface PredictBLService {
      * @throws NotFoundException
      */
     public String getVarianceInfo(String stock_num) throws BadInputException, NotFoundException;
+
+    /**
+     * 通过方差预测分析
+     * @param stock_num 股票编号
+     * @return 分析结论
+     * @throws BadInputException
+     * @throws NotFoundException
+     */
+    public String getArbrInfo(String stock_num) throws BadInputException, NotFoundException;
+
 }

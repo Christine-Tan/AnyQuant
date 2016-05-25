@@ -1,6 +1,7 @@
 package bl.analyse;
 
 import bl.service.GetStockService;
+import model.analyse.ARBRresult;
 import model.analyse.MACDResult;
 import model.stock.StockVO;
 import util.calculate.LinearRegression;
@@ -12,6 +13,7 @@ import util.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by JiachenWang on 2016/5/24.
@@ -93,6 +95,48 @@ public class PredictBLImpl implements PredictBLService {
             result += "从稳定程度看，该股票不是特别稳定，稳定程度仅仅超过系统中25%的股票。";
         else if (variance > v3)
             result += "从稳定程度看，该股票波动很大，具有一定的风险性。";
+
+        return result;
+    }
+
+    @Override
+    public String getArbrInfo(String stock_num) throws BadInputException, NotFoundException {
+
+        //TODO
+        ARBRresult arbr = null;
+
+        Map<String, Double> arList = arbr.getAr();
+        Map<String, Double> brList = arbr.getBr();
+
+        double ar = 0;
+
+        double[] arg1 = new double[arList.size()];
+        double[] arg2 = arbr.getArArray();
+        for (int i = 0; i < arList.size(); i++) {
+            arg1[i] = i + 1;
+        }
+        double ar_b = LinearRegression.calculateLR_b(arg1, arg2, arList.size());
+
+        arg2 = arbr.getBrArray();
+        double br_b = LinearRegression.calculateLR_b(arg1, arg2, brList.size());
+
+        String result = "根据当前AR指数，";
+        if (ar <= 50)
+            result += "股价已严重超卖，股价随时可能反弹，可逢低买入。";
+        else if (ar >= 80 && ar <= 120)
+            result += "盘整行情，股价走势平稳，出现大幅涨跌的概率比较低。";
+        else if (ar >= 150)
+            result += "股价已进入高价区，随时可能大幅回落下跌，应及时卖出股票。";
+
+        result += "根据ARBR曲线走势，";
+        if (ar_b>=0 && br_b>=0 && ar<150)
+            result += "该股票的人气不断提升，投资者可以考虑及时买入。";
+        else if (ar_b>=0 && br_b>=0 && ar>=150)
+            result += "股价已经达到高位，持股者应注意及时获利了结。";
+        else if (ar>80 && ar<120 && br_b<0)
+            result += "建议股民逢低买入。";
+        else if (ar_b<0 && br_b>=0)
+            result += "建议股民逢高出货。";
 
         return result;
     }

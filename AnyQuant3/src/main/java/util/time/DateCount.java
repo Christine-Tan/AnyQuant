@@ -1,11 +1,10 @@
 package util.time;
 
+import util.exception.BadInputException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 用于日期的处理
@@ -194,4 +193,57 @@ public class DateCount {
             return DateCount.count(today, -3);
         }
     }
+
+    /**
+     * 获得集合中最小日期
+     * @param date_set 日期集合
+     * @return 最小日期
+     */
+    public static String getMinDate(Set<String> date_set) throws BadInputException {
+        if (date_set.size()==0)
+            throw new BadInputException("日期集合有误");
+
+        List<Date> list = new ArrayList<Date>();
+        for (String date : date_set) {
+            list.add(DateCount.strToDate(date));
+        }
+        int index = 0;
+        int last = date_set.size()-1;
+        Date min = list.get(0);
+        while(index!=last){
+            if (list.get(index).before(min)) {
+                min = list.get(index);
+            }
+            index++;
+        }
+
+        return DateCount.dateToStr(min);
+    }
+
+    /**
+     * 获得集合中最大日期
+     * @param date_set 日期集合
+     * @return 最大日期
+     */
+    public static String getMaxDate(Set<String> date_set) throws BadInputException {
+        if (date_set.size()==0)
+            throw new BadInputException("日期集合有误");
+
+        List<Date> list = new ArrayList<Date>();
+        for (String date : date_set) {
+            list.add(DateCount.strToDate(date));
+        }
+        int index = 0;
+        int last = date_set.size()-1;
+        Date max = list.get(0);
+        while(index!=last){
+            if (list.get(index).after(max)) {
+                max = list.get(index);
+            }
+            index++;
+        }
+
+        return DateCount.dateToStr(max);
+    }
+
 }
